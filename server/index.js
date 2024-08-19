@@ -14,7 +14,13 @@ const paymnet = require("./routes/paymnet");
 const OrderRoutes = require("./routes/orederRoutes");
 
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://clean-breath-frontend.vercel.app/"],
+    methods: ["POST", "GET"],
+    credential: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
