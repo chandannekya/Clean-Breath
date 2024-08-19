@@ -1,6 +1,6 @@
 import { setLoading } from "../../slices/Auth";
 import { toast } from "react-hot-toast";
-import { apiConnector } from "../apiconnector";
+import { apiConnector } from "../apiConnector";
 import { BlogEndpoints } from "../apis";
 import { setBlogs, setBlogdel } from "../../slices/BlogsData";
 const { GET_BLOGS, CREATE_BLOG, GET_BLOG } = BlogEndpoints;
