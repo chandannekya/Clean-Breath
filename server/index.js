@@ -14,6 +14,7 @@ const paymnet = require("./routes/paymnet");
 const OrderRoutes = require("./routes/orederRoutes");
 
 app.use(cookieParser());
+
 app.use(
   cors({
     origin: "http://your-frontend-domain.com", // Replace with your frontend domain
@@ -21,6 +22,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
