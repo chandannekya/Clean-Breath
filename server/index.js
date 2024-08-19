@@ -15,7 +15,7 @@ const OrderRoutes = require("./routes/orederRoutes");
 
 app.use(cookieParser());
 app.use(cors({
-    origin: ["https://clean-breath-frontend.vercel.app/"],
+    origin: ["https://clean-breath-frontend.vercel.app"],
     methods: ["POST", "GET"],
     credential: true,
   }
