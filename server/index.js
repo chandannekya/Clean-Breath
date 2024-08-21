@@ -17,8 +17,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://your-frontend-domain.com", // Replace with your frontend domain
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    origin: "https://cleanbreath.netlify.app", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
