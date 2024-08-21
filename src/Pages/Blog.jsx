@@ -14,17 +14,17 @@ const Blog = () => {
     dispatch(getAllBlogs());
   }, [dispatch]);
 
-  if (loading) return <Loader />;
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="h-screen">
-      <h1 className=" text-black/85 uppercase poppins-bold bg-green-300 text-6xl  text-center p-4">
-        Blogs
+      <h1 className=" text-black/80 uppercase poppins-bold bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 text-6xl  text-center p-4">
+        Green insights
       </h1>
 
       <div className=" flex flex-col  items-center">
         <Link
-          className=" flex items-center gap-5 text-black/85 mt-6 bg-green-300 p-4 text-3xl rounded-md"
+          className=" flex items-center gap-5 text-black/85 mt-6 bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 p-4 text-3xl rounded-md"
           to="/write-blog"
         >
           <FaPenToSquare /> <h1>write Blog</h1>

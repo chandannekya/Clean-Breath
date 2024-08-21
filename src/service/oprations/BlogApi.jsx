@@ -17,8 +17,9 @@ export function getAllBlogs() {
       console.log(error);
 
       toast.error("Failed to load blogs");
+    } finally {
+      dispatch(setLoading(false));
     }
-    setLoading(false);
   };
 }
 

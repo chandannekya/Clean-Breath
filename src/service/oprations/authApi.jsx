@@ -3,24 +3,12 @@ import { setIslogin, setLoading, setToken } from "../../slices/Auth";
 const { SIGNUP_API, SIGNIN_API } = authEndpoits;
 import { toast } from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
-import { useSelector } from "react-redux";
 
 export function signUp(username, email, password, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
 
     try {
-      console.log("Sending signup data:", {
-        username,
-
-        email,
-
-        password,
-        navigate,
-      });
-
-      console.log(SIGNUP_API + "signup");
-      console.log("chal rha h");
       const response = await apiConnector(
         "POST",
 
@@ -39,16 +27,15 @@ export function signUp(username, email, password, navigate) {
         }
       );
 
-      console.log(response.data);
-
       toast.success("Signup Successfully");
-      dispatch(setLoading(false));
 
       navigate("/login");
     } catch (error) {
       console.log(error);
 
-      toast.error();
+      toast.error(error.response?.data?.error || "An error occurred");
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 }

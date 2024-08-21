@@ -12,12 +12,12 @@ const AuthRoutes = require("./routes/AuthRoutes");
 const BlogRoutes = require("./routes/BlogRoutes");
 const paymnet = require("./routes/paymnet");
 const OrderRoutes = require("./routes/orederRoutes");
-
+const PlantsRoute = require("./routes/PlantsRoute");
 app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://your-frontend-domain.com", // Replace with your frontend domain
+    origin: ["http://your-frontend-domain.com", "http://localhost:5173"], // Replace with your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -36,6 +36,7 @@ app.use("/api/user", AuthRoutes);
 app.use("/api/blog", BlogRoutes);
 app.use("/api/payment", paymnet);
 app.use("/api/order", OrderRoutes);
+app.use("/api/plants", PlantsRoute);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);

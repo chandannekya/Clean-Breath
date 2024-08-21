@@ -20,3 +20,8 @@ export const PaymentEndpoints = {
   CREATE_PAYMENT: `${BASE_URL}/payment/createPayment`,
   VERIFY_PAYMENT: `${BASE_URL}/payment/verifyPayment`,
 };
+
+export const PlantsEndpoints = {
+  GET_PLANTS: `${BASE_URL}/plants/getAllplants`,
+  ADD_PLANT: `${BASE_URL}/plants/addPlant`,
+};
