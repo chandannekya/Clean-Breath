@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 poppins-regular text-black/80 py-10 mt-12">
+    <footer className="bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 poppins-regular  text-black/80 py-10 mt-12">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center px-6">
         {/* Logo and Brand */}
         <div className="flex items-center mb-6 lg:mb-0">

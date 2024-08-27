@@ -6,26 +6,25 @@ const Order = require("../models/OrderModel");
 
 exports.createOrder = async (req, res) => {
   try {
-    const { orderItems, shippingAddress, paymentId } = req.body;
+    const { orderItems, shippingAddress, mobile } = req.body;
 
     const user = req.user.id;
     console.log("User ID:", user);
 
-    if (!orderItems || !shippingAddress || !paymentId) {
+    if ((!orderItems || !shippingAddress, !mobile)) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     console.log("Order Items:", orderItems);
     console.log("Shipping Address:", shippingAddress);
-    console.log("Payment ID:", paymentId);
 
     console.log("Order model:", Order); // Log to check if the Order model is defined
 
     const order = await Order.create({
       user,
       orderItems,
+      mobile,
       shippingAddress,
-      paymentId,
     });
 
     res.status(201).json({

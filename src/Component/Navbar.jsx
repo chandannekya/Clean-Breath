@@ -7,6 +7,9 @@ import { GiHamburgerMenu } from "react-icons/gi"; // Import a hamburger icon
 
 const Navbar = () => {
   const login = useSelector((state) => state.auth.islogin);
+  const token = useSelector((state) => state.auth.token);
+
+  console.log(token);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -56,7 +59,7 @@ const Navbar = () => {
 
           {/* Auth Buttons for Large Screens */}
           <div className="hidden lg:flex gap-3">
-            {login ? (
+            {token !== null ? (
               <button onClick={logouthandel}>Log Out</button>
             ) : (
               <>
@@ -109,7 +112,7 @@ const Navbar = () => {
             >
               About
             </NavLink>
-            {login ? (
+            {token !== null ? (
               <button
                 className="py-2 w-full text-center"
                 onClick={logouthandel}

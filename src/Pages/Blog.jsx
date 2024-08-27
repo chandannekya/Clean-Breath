@@ -9,6 +9,7 @@ const Blog = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.blog.loading); // Adjust according to your state structure
   const blogs = useSelector((state) => state.blog.blogs);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     dispatch(getAllBlogs());
@@ -17,7 +18,7 @@ const Blog = () => {
   return loading ? (
     <Loader />
   ) : (
-    <div className="h-screen">
+    <div className="">
       <h1 className=" text-black/80 uppercase poppins-bold bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 text-6xl  text-center p-4">
         Green insights
       </h1>

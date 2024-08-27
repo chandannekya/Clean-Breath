@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-
 import PlantSection from "./Pages/PlantSection";
 import HeroSection from "./Pages/HeroSection";
 import PlantDel from "./Pages/PlantDel";
@@ -20,13 +19,13 @@ import OrderPage from "./Pages/OrderPage";
 
 const App = () => {
   return (
-    <div className="relative">
-      <div className="fixed top-0 left-0 w-full z-50">
+    <div className="flex flex-col min-h-screen overflow-x-hidden ">
+      <header className="fixed top-0 left-0  right-0 z-50">
         <Navbar />
-      </div>
-      <div className="pt-16">
-        {" "}
-        {/* Adjust padding to prevent content overlap */}
+      </header>
+
+      {/* Main content area with padding */}
+      <main className="flex-grow pt-16">
         <Routes>
           <Route path="write-blog" element={<CreateBlog />} />
           <Route path="/blogs/:id" element={<DetailedBlog />} />
@@ -34,7 +33,7 @@ const App = () => {
           <Route path="/blogs" element={<Blog />} />
           <Route path="/plants" element={<PlantDel />} />
           <Route path="/" element={<HeroSection />} />
-          <Route path="/Order" element={<OrderPage />} />
+          <Route path="/plant/:plantName/Order" element={<OrderPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/plant" element={<PlantSection />} />
           <Route path="/signup" element={<SignUp />} />
@@ -42,8 +41,12 @@ const App = () => {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
         </Routes>
-      </div>
-      <Footer />
+      </main>
+
+      {/* Footer */}
+      <footer className=" mt-auto w-full">
+        <Footer />
+      </footer>
     </div>
   );
 };

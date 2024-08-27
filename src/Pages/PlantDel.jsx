@@ -56,6 +56,7 @@ const PlantDel = () => {
             </div>
           ))}
         </div>
+
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
           {filteredPlants.map(([key, plantDetails]) => (
             <div key={plantDetails._id}>

@@ -10,6 +10,7 @@ exports.auth = async (req, res, next) => {
       req.cookies.token ||
       req.body.token ||
       req.header("Authorization").replace("Bearer ", "");
+    console.log(token);
 
     if (!token) {
       //if token missing, then return response
@@ -20,15 +21,14 @@ exports.auth = async (req, res, next) => {
     }
 
     try {
-      //verify the token
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      const decode = await jwt.verify(token, process.env.JWT_SECRET);
       console.log(decode);
+
       req.user = decode;
-    } catch (err) {
-      return res.status(401).json({
-        success: false,
-        message: "token is invalid",
-      });
+    } catch (error) {
+      return res
+        .status(401)
+        .json({ success: false, message: "token is invalid" });
     }
     next();
   } catch (error) {

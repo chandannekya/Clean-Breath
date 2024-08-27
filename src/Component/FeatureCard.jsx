@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const FeatureCard = ({ icon, heading, description, path }) => {
   return (
-    <div className="border-2 p-4 w-[480px] border-green-300 rounded-xl cursor-pointer">
+    <div className="border-2 p-4 lg:w-[480px]   border-green-300 rounded-xl m-5 cursor-pointer">
       <Link to={`${path}`}>
         {" "}
         <div className="flex items-center gap-3">

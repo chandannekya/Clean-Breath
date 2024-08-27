@@ -27,6 +27,7 @@ export function createBlog(title, body, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     const token = localStorage.getItem("token");
+    console.log(token);
     try {
       const response = await apiConnector(
         "POST",
@@ -42,7 +43,7 @@ export function createBlog(title, body, navigate) {
       navigate("/blogs");
     } catch (error) {
       console.log(error);
-      toast.error("cant Post blog");
+      if (error?.response?.request?.status === 401) toast.error("LogIn Please");
     }
   };
 }

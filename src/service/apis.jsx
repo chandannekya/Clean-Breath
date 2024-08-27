@@ -24,4 +24,5 @@ export const PaymentEndpoints = {
 export const PlantsEndpoints = {
   GET_PLANTS: `${BASE_URL}/plants/getAllplants`,
   ADD_PLANT: `${BASE_URL}/plants/addPlant`,
+  GET_PLANT: `${BASE_URL}/plants/getplant`,
 };

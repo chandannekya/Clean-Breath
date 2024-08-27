@@ -7,7 +7,7 @@ import { FaStore } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const Feature = () => {
   return (
-    <div>
+    <div className=" ">
       <h1 className="text-center text-5xl poppins-bold text-black/80 m-8">
         Fetures
       </h1>
@@ -21,8 +21,8 @@ const Feature = () => {
         information in the world of plant care.
       </p>
 
-      <div className="  flex flex-col items-center gap-4  m-7">
-        <div className="flex gap-4 lg:flex-row flex-col">
+      <div className="  flex flex-col items-center gap-4  m-7 ">
+        <div className="flex gap-4 lg:flex-row flex-col ">
           <FeatureCard
             icon={<GiConvergenceTarget />}
             path={"/plant"}

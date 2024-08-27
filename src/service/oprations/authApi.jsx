@@ -29,7 +29,7 @@ export function signUp(username, email, password, navigate) {
 
       toast.success("Signup Successfully");
 
-      navigate("/login");
+      navigate("/signin");
     } catch (error) {
       console.log(error);
 

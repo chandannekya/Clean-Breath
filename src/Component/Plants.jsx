@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsDropletHalf } from "react-icons/bs";
 import { IoSunny } from "react-icons/io5";
 import { GiFertilizerBag } from "react-icons/gi";
@@ -7,29 +7,30 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import CarePlant from "./CarePlant";
 import sunimage from "../assets/climate_lightening_full_sun_da7f3a0b51.webp";
 import difficultyimage from "../assets/climate_difficulty_66231487c6.webp";
-import PlantDis from "../PlantDis";
-import searchPhotos from "./Function/SearchImage";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { getPlant } from "../service/oprations/plantsApi";
+import { useDispatch } from "react-redux";
+import searchPhotos from "./Function/SearchImage";
 
 const Plants = ({ plantName }) => {
-  const Plant = PlantDis[plantName];
-
-  if (!Plant) {
-    console.error(`Plant data for '${plantName}' not found.`);
-    return <div>Plant data not available.</div>;
-  }
+  const [Plant, setPlant] = useState(null);
   const [photos, setPhotos] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Call searchPhotos when the component mounts or plantName changes
-    const fetchPhotos = async () => {
+    const fetchPhotosAndPlant = async () => {
       const results = await searchPhotos(plantName);
+      const data = await dispatch(getPlant(plantName));
+      setPlant(data);
       setPhotos(results);
     };
 
-    fetchPhotos();
-  }, [plantName]);
+    fetchPhotosAndPlant();
+  }, [plantName, dispatch]);
+
+  if (!Plant) {
+    return <div>Loading plant data...</div>;
+  }
 
   const CarePlants = [
     {
@@ -60,30 +61,31 @@ const Plants = ({ plantName }) => {
   ];
 
   return (
-    <div className="flex  justify-center p-5 ">
-      <div className=" ">
+    <div className="flex justify-center p-5">
+      <div className="">
         <div className="bg-black/85 ml-2 text-white flex w-fit p-2 rounded-full">
-          <Link className=" rounded-full " to="/plants">
-            <IoMdArrowRoundBack />{" "}
+          <Link className="rounded-full" to="/plants">
+            <IoMdArrowRoundBack />
           </Link>
         </div>
-        <div className="m-8 lg:mx-8 mx-3  flex flex-col gap-2">
-          <h1 className="text-4xl text-black/80 poppins-bold">{plantName}</h1>
-          <p className="text-lg poppins-medium text-black/50">
-            {Plant.scientificName}
-          </p>
-          <p className="poppins-medium text-lg">
-            Other Names:
-            <span className=" ml-1 text-lg poppins-medium-italic text-black/50">
-              {Plant.otherNames.join(", ")}
-            </span>
-          </p>
+        <div className="flex justify-between">
+          <div className="m-8 lg:mx-8 mx-3 flex flex-col gap-2">
+            <h1 className="text-4xl text-black/80 poppins-bold">{plantName}</h1>
+            <p className="text-lg poppins-medium text-black/50">
+              {Plant.scientificName}
+            </p>
+            <p className="poppins-medium text-lg">
+              Other Names:
+              <span className="ml-1 text-lg poppins-medium-italic text-black/50">
+                {Plant.otherNames?.join(", ")}
+              </span>
+            </p>
+          </div>
         </div>
-
-        <div className="flex lg:flex-row flex-col gap-5    justify-around">
+        <div className="flex lg:flex-row flex-col gap-5 justify-around">
           <div>
             <img
-              className=" lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg shadow-green-100"
+              className="lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg shadow-green-100"
               src={photos}
               alt="Plant"
             />
@@ -96,7 +98,7 @@ const Plants = ({ plantName }) => {
             <p className="text-[16px] poppins-regular">{Plant.description}</p>
 
             <div className="m-8">
-              <div className="flex  gap-4 lg:flex-row flex-col">
+              <div className="flex gap-4 lg:flex-row flex-col">
                 <div className="flex h-[60px] gap-1">
                   <img
                     className="object-contain w-[60px] border-2 p-2 rounded-2xl"
@@ -108,7 +110,7 @@ const Plants = ({ plantName }) => {
                     <p className="text-black poppins-bold">{Plant.sunlight}</p>
                   </div>
                 </div>
-                <div className="flex   h-[60px] gap-1">
+                <div className="flex h-[60px] gap-1">
                   <div className="flex gap-1">
                     <img
                       className="object-contain w-[60px] border-2 p-2 rounded-2xl"
@@ -129,21 +131,36 @@ const Plants = ({ plantName }) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="">
           <h1 className="text-2xl poppins-bold m-8">
             How to Care for the Plant
           </h1>
 
-          <div>
-            {CarePlants.map((care, index) => (
-              <div key={index}>
-                <CarePlant
-                  icon={care.icon}
-                  heading={care.heading}
-                  para={care.para}
-                />
+          <div className="flex lg:flex-row flex-col items-center lg:items-start">
+            <div className="lg:w-[60%] w-full">
+              {CarePlants.map((care, index) => (
+                <div key={index}>
+                  <CarePlant
+                    icon={care.icon}
+                    heading={care.heading}
+                    para={care.para}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="lg:w-[30%] text-center">
+              <div className="p-2 border-[1px] w-full border-green-400 poppins-bold rounded-md">
+                Price : {Plant.price}
               </div>
-            ))}
+              <div className="bg-green-300 rounded-md p-2 m-4 text-white/70 hover:scale-105 transition-all duration-300 ease-in-out poppins-regular">
+                <Link
+                  to={`/plant/${encodeURIComponent(plantName)}/Order`}
+                  className=""
+                >
+                  Buy Plant
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://cleanbreath.netlify.app",
+    origin: ["https://cleanbreath.netlify.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
 
     allowedHeaders: ["Content-Type", "Authorization"],
