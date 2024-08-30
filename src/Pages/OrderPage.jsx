@@ -79,7 +79,7 @@ const OrderPage = () => {
                 orderId,
               })
             );
-            navigate("/success"); // Navigate to success page after verification
+            navigate("/plants"); // Navigate to success page after verification
           } catch (error) {
             toast.error("An error occurred during payment verification");
             console.error("Verification Error:", error.message || error);
