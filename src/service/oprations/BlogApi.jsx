@@ -11,7 +11,7 @@ export function getAllBlogs() {
 
     try {
       const response = await apiConnector("GET", GET_BLOGS);
-      console.log(response.data.blogs);
+      console.log(response.data);
       dispatch(setBlogs(response.data.blogs));
     } catch (error) {
       console.log(error);
@@ -56,6 +56,7 @@ export function getBlog(id) {
 
       dispatch(setBlogdel(response.data.blog));
       dispatch(setLoading(false));
+      return response;
     } catch (error) {
       console.log(error);
     }

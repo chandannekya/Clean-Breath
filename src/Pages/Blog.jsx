@@ -10,7 +10,7 @@ const Blog = () => {
   const loading = useSelector((state) => state.blog.loading); // Adjust according to your state structure
   const blogs = useSelector((state) => state.blog.blogs);
   const token = useSelector((state) => state.auth.token);
-
+  console.log(blogs);
   useEffect(() => {
     dispatch(getAllBlogs());
   }, [dispatch]);

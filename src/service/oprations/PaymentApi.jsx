@@ -64,7 +64,7 @@ export function verifyPayment(
       // Notify the user of success
       toast.success("Payment Successful");
       console.log("Payment Verification Response:", response);
-      navigate("/plants");
+      // navigate("/plants");
     } catch (error) {
       // Log the error and notify the user
       console.error("Payment Verification Error:", error.message || error);

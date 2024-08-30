@@ -10,9 +10,7 @@ export function createOrder(
   orderItems,
   mobile,
   shippingAddress,
-  paymentId,
-  navigate
-  // Adding token as a parameter
+  paymentId
 ) {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -39,12 +37,11 @@ export function createOrder(
         { Authorization: `Bearer ${token}` } // Token passed here
       );
 
+      return response;
       // If the order creation fails, navigate to the orders page
-
+      // navigate("/plant");
       // Show success message and handle response
       toast.success("Order Created");
-      navigate("plant");
-      return response;
     } catch (error) {
       // Log and show error messages
       console.log(error);

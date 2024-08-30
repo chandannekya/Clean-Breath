@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import searchPhotos from "../Component/Function/SearchImage";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPlant } from "../service/oprations/plantsApi";
 import { createOrder } from "../service/oprations/OrederApi";
 import { toast } from "react-hot-toast";
-import { verifyPayment } from "../service/oprations/PaymentApi";
-import { createPayment } from "../service/oprations/PaymentApi";
+import { verifyPayment, createPayment } from "../service/oprations/PaymentApi";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import logo from "../assets/Untitled design (1).png";
 import Loader from "../Component/Loader";
 import { setLoading } from "../slices/Auth";
 
 const OrderPage = () => {
   const [photos, setPhotos] = useState("");
-  const token = useSelector((state) => state.auth.token);
-  const loading = useSelector((state) => state.auth.loading);
   const { plantName } = useParams();
   const [Plant, setPlant] = useState({});
   const dispatch = useDispatch();
@@ -30,6 +26,9 @@ const OrderPage = () => {
   });
   const [mobile, setMobile] = useState("");
   const [message, setMessage] = useState(null);
+  const token = useSelector((state) => state.auth.token);
+  const loading = useSelector((state) => state.auth.loading);
+
   const loadRazorpayScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -42,58 +41,45 @@ const OrderPage = () => {
 
   const paymentHandler = async (orderId) => {
     try {
-      // Load Razorpay script
       dispatch(setLoading(true));
       await loadRazorpayScript("https://checkout.razorpay.com/v1/checkout.js");
-
       dispatch(setLoading(false));
-      // Create Payment through Razorpay
+
       const response = await dispatch(
         createPayment(Plant.price * Quantity * 100)
       );
-      // Amount in paise
       const { data } = response;
-      console.log(data);
 
       if (!data || !data.orderId || !data.amount || !data.currency) {
         throw new Error("Invalid payment creation response");
       }
 
       const options = {
-        key: "rzp_test_yGQVjKE6esDpZF", // Replace with your Razorpay Key ID
-        amount: data.amount, // Amount in paise
+        key: "rzp_test_yGQVjKE6esDpZF",
+        amount: data.amount,
         currency: data.currency,
         name: "Clean Breath",
         description: "Payment for your order",
-        image: { logo }, // Optional: Your company logo
-        order_id: data.orderId, // Razorpay Order ID
-        callback_url: "http://localhost:5000/api/payment/verifyPayment", // Replace with your backend URL for verification
-        theme: {
-          color: "#3399cc",
-        },
+        image: logo,
+        order_id: data.orderId,
+        callback_url: "",
+        theme: { color: "#3399cc" },
         handler: async (response) => {
-          // Verification logic here
           try {
             const {
               razorpay_payment_id,
               razorpay_order_id,
               razorpay_signature,
             } = response;
-
-            console.log(
-              razorpay_order_id,
-
-              razorpay_signature
-            );
-            const verifyResponse = await dispatch(
+            await dispatch(
               verifyPayment({
                 razorpay_payment_id,
                 razorpay_order_id,
                 razorpay_signature,
-                orderId: orderId,
-                navigate, // Pass your order ID to backend
+                orderId,
               })
             );
+            navigate("/success"); // Navigate to success page after verification
           } catch (error) {
             toast.error("An error occurred during payment verification");
             console.error("Verification Error:", error.message || error);
@@ -125,14 +111,12 @@ const OrderPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate fields
     if (!shippingAddress.address || !mobile) {
       setMessage("All fields are required");
       return;
     }
 
     try {
-      // Step 1: Create Order
       const orderResponse = await dispatch(
         createOrder(
           Plant._id,
@@ -144,27 +128,22 @@ const OrderPage = () => {
             },
           ],
           mobile,
-          shippingAddress,
-          navigate,
-          token
+          shippingAddress
         )
       );
       const orderId = orderResponse.data.order._id;
-      // Step 2: Proceed to payment
-      await paymentHandler(orderId); // Pass the created order ID
+      console.log(orderResponse);
+      await paymentHandler(orderId);
     } catch (error) {
       console.error("Order Creation Error:", error.message || error);
       setMessage("An error occurred while creating the order");
     }
   };
 
-  const increaseQuantity = () => {
+  const increaseQuantity = () =>
     setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const decreaseQuantity = () => {
+  const decreaseQuantity = () =>
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  };
 
   useEffect(() => {
     const fetchPhotosAndPlant = async () => {
@@ -175,11 +154,10 @@ const OrderPage = () => {
     };
 
     fetchPhotosAndPlant();
-  }, [plantName]);
+  }, [plantName, dispatch]);
 
   return loading ? (
-    <div className=" h-screen flex justify-center items-center">
-      {" "}
+    <div className="h-screen flex justify-center items-center">
       <Loader />
     </div>
   ) : (
@@ -206,7 +184,7 @@ const OrderPage = () => {
             <label className="block text-gray-700">Shipping Address</label>
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300  focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
               placeholder="Address"
               name="shippingAddress.address"
               value={shippingAddress.address}
@@ -215,7 +193,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300  focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
               placeholder="City"
               name="shippingAddress.city"
               value={shippingAddress.city}
@@ -224,7 +202,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300  focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
               placeholder="Postal Code"
               name="shippingAddress.postalCode"
               value={shippingAddress.postalCode}
@@ -233,7 +211,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300 rounded-md  focus:outline-green-800 focus:outline focus:outline-2 mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 rounded-md focus:outline-green-800 focus:outline focus:outline-2 mt-2"
               placeholder="Country"
               name="shippingAddress.country"
               value={shippingAddress.country}
@@ -242,10 +220,10 @@ const OrderPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 ">Mobile Number</label>
+            <label className="block text-gray-700">Mobile Number</label>
             <input
               type="tel"
-              className="w-full p-2 border input-shadow border-gray-300  focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
               placeholder="Enter mobile number"
               name="mobile"
               value={mobile}
@@ -259,7 +237,7 @@ const OrderPage = () => {
               <button
                 type="button"
                 onClick={decreaseQuantity}
-                className="px-4 py-2  border border-green-300   rounded-full"
+                className="px-4 py-2 border border-green-300 rounded-full"
               >
                 -
               </button>
@@ -267,25 +245,24 @@ const OrderPage = () => {
                 type="text"
                 value={Quantity}
                 readOnly
-                className="w-12 text-center   focus:outline-green-800 focus:outline focus:outline-2 "
+                className="w-12 text-center focus:outline-green-800 focus:outline focus:outline-2 mx-2"
               />
               <button
                 type="button"
                 onClick={increaseQuantity}
-                className="px-4 py-2  border border-green-300  rounded-full"
+                className="px-4 py-2 border border-green-300 rounded-full"
               >
                 +
               </button>
             </div>
           </div>
-          <div className="text-center mt-8">
-            <button
-              type="submit"
-              className="w-full p-3 text-white bg-green-500 rounded-md hover:bg-green-600 transition"
-            >
-              Proceed to Payment
-            </button>
-          </div>
+          {message && <p className="text-red-500">{message}</p>}
+          <button
+            type="submit"
+            className="poppins-regular mt-4 w-full bg-green-600 text-white p-3 rounded-md hover:bg-green-700 transition duration-300"
+          >
+            Place Order
+          </button>
         </form>
       </div>
     </div>
