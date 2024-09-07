@@ -30,7 +30,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className=" object-cover m-8">
+      <div className=" object-cover  m-8">
         <img
           src="https://img.freepik.com/free-vector/plant-white_1308-41021.jpg?w=740&t=st=1722587912~exp=1722588512~hmac=82f333fd6be41f3dbef8a5c8e51d465f182a81395f5c460bbb3816a5d6f75333"
           alt=""
