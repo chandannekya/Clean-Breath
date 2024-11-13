@@ -7,6 +7,7 @@ import aqiThresholds from "../AqiTreshhold";
 import { Link } from "react-router-dom";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 // Function to determine the air quality category and health impact
 const getAirQualityCategory = (pollutant, level) => {
@@ -54,13 +55,18 @@ const PlantSection = () => {
   };
 
   return (
-    <div className="flex flex-col  bg-opacity-40 max-h-full   p-8 justify-center">
+    <div className="flex flex-col bg-opacity-40 max-h-full p-8 justify-center">
       <div className="flex lg:flex-row flex-col-reverse items-center justify-around">
-        <div className="lg:w-2/4 mt-8 gap-4 flex flex-col p-4">
+        <motion.div
+          className="lg:w-2/4 mt-8 gap-4 flex flex-col p-4"
+          initial={{ opacity: 0, x: -50 }} // Animation start state
+          animate={{ opacity: 1, x: 0 }} // Animation end state
+          transition={{ duration: 0.6 }} // Duration of animation
+        >
           <h1 className="text-6xl text-black/80 font-bold poppins-bold">
             Find Your Green <br /> Guardian!
           </h1>
-          <p className="text-md text-green-800 poppins-regular  w-3/4">
+          <p className="text-md text-green-800 poppins-regular w-3/4">
             Discover plants that purify your air and create a healthier
             environment. Search by air quality needs to find the perfect plant
             that not only enhances your space but also boosts your well-being.
@@ -74,15 +80,21 @@ const PlantSection = () => {
               onChange={changeHandler}
               value={city}
             />
-            <button
-              className="bg-green-800  poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
+            <motion.button
+              whileHover={{ scale: 1.1 }} // Scale up on hover
+              className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
               onClick={getPlants}
             >
               Get Your Plants
-            </button>
+            </motion.button>
           </div>
-        </div>
-        <div className="ml-3  mt-5">
+        </motion.div>
+        <motion.div
+          className="ml-3 mt-5"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <img
             style={{
               filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 5))",
@@ -90,34 +102,37 @@ const PlantSection = () => {
             src={pimg}
             alt="Tree"
           />
-        </div>
+        </motion.div>
       </div>
       {Loading ? (
-        <div className="">
-          <Loader />
-        </div>
+        <Loader />
       ) : (
-        <div>
-          {" "}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
           {aqi === 0 ? null : (
-            <div className="  flex flex-col  items-center  text-center justify-center">
+            <motion.div
+              className="flex flex-col items-center text-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h1
-                className={`text-3xl poppins-bold  ${aqiThresholds[aqi].warncolor} font-bold font-inter `}
+                className={`text-3xl poppins-bold  ${aqiThresholds[aqi].warncolor} font-bold font-inter`}
               >
                 <span>AIR QUALITY:</span> {aqiThresholds[aqi].max}
               </h1>
-              <h2 className="text-xl poppins-semibold  max-w-[800px] font-semibold">
-                <span className=" uppercase poppins-bold ">
-                  {" "}
-                  Health Impact :
-                </span>{" "}
+              <h2 className="text-xl poppins-semibold max-w-[800px] font-semibold">
+                <span className="uppercase poppins-bold ">Health Impact :</span>{" "}
                 {aqiThresholds[aqi].healthImpact}
               </h2>
-              <h3 className="text-lg poppins-semibold  max-w-[800px]  font-semibold">
-                <span className=" uppercase  poppins-bold"> Advice :</span>{" "}
+              <h3 className="text-lg poppins-semibold max-w-[800px] font-semibold">
+                <span className="uppercase poppins-bold">Advice :</span>{" "}
                 {aqiThresholds[aqi].plantingAdvice}
               </h3>
-            </div>
+            </motion.div>
           )}
           <div className="mt-8 flex lg:flex-row flex-col gap-3">
             {Object.entries(gases).map(([key, value]) => {
@@ -135,15 +150,17 @@ const PlantSection = () => {
                 category === "Moderate" ? "text-yellow-600" : "text-red-600";
 
               return (
-                <div className="flex flex-col items-center  w-11/12">
-                  <h2 className="text-4xl mt-5 poppins-bold  text-green-950 font-bold font-inter">
+                <motion.div
+                  key={key}
+                  className="flex flex-col items-center w-11/12"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-4xl mt-5 poppins-bold text-green-950 font-bold font-inter">
                     Air Quality and Mitigating Trees
                   </h2>
-                  ;
-                  <div
-                    key={key}
-                    className="mt-4 p-4 border-slate-400 hover:scale-105 transition-all ease-in-out duration-150 poppins-regular text-left max-w-[400px]   rounded-md shadow  bg-transparent border-[1px]"
-                  >
+                  <div className="mt-4 p-4 border-slate-400 hover:scale-105 transition-all ease-in-out duration-150 poppins-regular text-left max-w-[400px] rounded-md shadow bg-transparent border-[1px]">
                     <h3 className={`text-xl poppins-bold ${categoryColor}`}>
                       {pollutant.pollutant}
                     </h3>
@@ -153,23 +170,23 @@ const PlantSection = () => {
                     <h4 className="text-lg font-semibold text-green-700">
                       Trees that help reduce {pollutant.pollutant}:
                     </h4>
-                    <ul className=" flex flex-col pl-5">
+                    <ul className="flex flex-col pl-5">
                       {pollutant.trees.map((tree, index) => (
                         <Link
                           to={`/plant/${encodeURIComponent(tree)}`}
                           key={index}
-                          className=" mt-3 bg-opacity-20 bg-transparent border-green-800/20 border-[1.5px] text-center p-2 rounded-md"
+                          className="mt-3 bg-opacity-20 bg-transparent border-green-800/20 border-[1.5px] text-center p-2 rounded-md"
                         >
                           {tree}
                         </Link>
                       ))}
                     </ul>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

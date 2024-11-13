@@ -26,6 +26,7 @@
     "breathair": "file:",
     "dompurify": "^3.1.6",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.7.0",
     "jodit": "^4.2.27",
     "jodit-react": "^4.1.2",
     "lottie-react": "^2.4.0",

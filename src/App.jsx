@@ -16,35 +16,39 @@ import DetailedBlog from "./Pages/DetailedBlog";
 import ContactUs from "./Pages/ContactUs";
 import AboutUs from "./Pages/AboutUs";
 import OrderPage from "./Pages/OrderPage";
+import NotFound from "./Pages/NotFound"; // Add a NotFound component
+
+import Feature from "./Pages/Feature";
+import Faq from "./Component/Faq";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden ">
-      <header className="fixed top-0 left-0  right-0 z-50">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      <header className="fixed top-0 left-0 right-0 z-50">
         <Navbar />
       </header>
 
       {/* Main content area with padding */}
       <main className="flex-grow pt-16">
         <Routes>
+          <Route path="/" element={<HeroSection />} />
           <Route path="write-blog" element={<CreateBlog />} />
           <Route path="/blogs/:id" element={<DetailedBlog />} />
           <Route path="/plant/:plantName" element={<PlantsPage />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/plants" element={<PlantDel />} />
-          <Route path="/" element={<HeroSection />} />
+          {/* <Route path="/" element={<HeroSection />} /> */}
           <Route path="/plant/:plantName/Order" element={<OrderPage />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/plant" element={<PlantSection />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="*" element={<NotFound />} /> {/* 404 route */}
         </Routes>
       </main>
 
       {/* Footer */}
-      <footer className=" mt-auto w-full">
+      <footer className="mt-auto w-full">
         <Footer />
       </footer>
     </div>
