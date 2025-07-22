@@ -3,70 +3,98 @@ import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const ContactUs = () => {
   return (
-    <div className="mt-10">
-      <h1 className="text-center m-8 text-4xl poppins-bold text-black/80">
+    <div className="min-h-screen bg-white text-gray-800 py-10 px-4">
+      <h1 className="text-center text-4xl font-bold text-green-600 mb-10">
         Contact Us
       </h1>
-      <div className="flex flex-col items-center gap-8">
-        <div className="border-2 p-5 w-[60%] rounded-xl border-green-300">
-          <div className="flex items-center gap-4">
-            <FaPhoneAlt className="text-xl text-green-400" />
+
+      <div className="flex flex-col lg:flex-row lg:justify-center gap-10 items-center mr-4">
+        {/* Contact Info Cards */}
+        <div className="flex flex-col gap-6 w-full max-w-md">
+          <div className="flex items-start gap-4 border p-5 rounded-xl shadow-sm hover:shadow-md transition border-green-300">
+            <FaPhoneAlt className="text-2xl text-green-500 mt-1" />
             <div>
-              <h2 className="text-xl poppins-semibold text-black/80">Phone</h2>
-              <p className="poppins-semibold text-black/50">+123 456 7890</p>
+              <h2 className="text-xl font-semibold">Phone</h2>
+              <p className="text-gray-600">+123 456 7890</p>
             </div>
           </div>
-        </div>
 
-        <div className="border-2 p-5 w-[60%] rounded-xl border-green-300">
-          <div className="flex items-center gap-4">
-            <FaEnvelope className="text-xl text-green-400" />
+          <div className="flex items-start gap-4 border p-5 rounded-xl shadow-sm hover:shadow-md transition border-green-300">
+            <FaEnvelope className="text-2xl text-green-500 mt-1" />
             <div>
-              <h2 className="text-xl poppins-semibold text-black/80">Email</h2>
-              <p className="poppins-semibold text-black/50">
-                info@cleanbreath.com
-              </p>
+              <h2 className="text-xl font-semibold">Email</h2>
+              <p className="text-gray-600">info@cleanbreath.com</p>
             </div>
           </div>
-        </div>
 
-        <div className="border-2 p-5 w-[60%] rounded-xl border-green-300">
-          <div className="flex items-center gap-4">
-            <FaMapMarkerAlt className="text-xl text-green-400" />
+          <div className="flex items-start gap-4 border p-5 rounded-xl shadow-sm hover:shadow-md transition border-green-300">
+            <FaMapMarkerAlt className="text-2xl text-green-500 mt-1" />
             <div>
-              <h2 className="text-xl poppins-semibold text-black/80">
-                Address
-              </h2>
-              <p className="poppins-semibold text-black/50">
+              <h2 className="text-xl font-semibold">Address</h2>
+              <p className="text-gray-600">
                 123 Green Avenue, Eco City, Earth 10101
               </p>
             </div>
           </div>
         </div>
 
-        <div className="border-2 p-5 w-[60%] rounded-xl border-green-300">
-          <h2 className="text-xl poppins-semibold text-black/80 mb-4">
+        {/* Form Section */}
+        <div className="w-full max-w-md border p-6 rounded-xl border-green-300 shadow-lg bg-white">
+          <h2 className="text-2xl font-semibold text-green-600 mb-4">
             Send Us a Message
           </h2>
+
           <form className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="border-2 rounded-lg p-3 poppins-semibold text-black/70 border-green-300 focus:outline-none"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="border-2 rounded-lg p-3 poppins-semibold text-black/70 border-green-300 focus:outline-none"
-            />
-            <textarea
-              placeholder="Your Message"
-              className="border-2 rounded-lg p-3 poppins-semibold text-black/70 border-green-300 focus:outline-none"
-              rows="5"
-            />
+            <div className="flex flex-col">
+              <label htmlFor="name" className="text-sm font-medium mb-1">
+                Your Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                required
+                placeholder="Enter your name"
+              className="p-3 border border-green-300 rounded-md 
+                         focus:outline-none focus:ring-2 focus:ring-green-400 
+                         hover:border-green-500 transition"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="email" className="text-sm font-medium mb-1">
+                Your Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder="Enter your email"
+              className="p-3 border border-green-300 rounded-md 
+                        focus:outline-none focus:ring-2 focus:ring-green-400 
+                       hover:border-green-500 transition"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="message" className="text-sm font-medium mb-1">
+                Your Message
+              </label>
+              <textarea
+                id="message"
+                rows={5}
+                required
+                placeholder="Type your message..."
+               className="p-3 border border-green-300 rounded-md 
+                          focus:outline-none focus:ring-2 focus:ring-green-400 
+                         hover:border-green-500 transition"
+              />
+            </div>
+
             <button
               type="submit"
-              className="bg-green-400 text-white p-3 rounded-lg poppins-semibold hover:bg-green-500 transition duration-300"
+              className="p-3 border border-green-300 rounded-md 
+                         focus:outline-none focus:ring-2 focus:ring-green-400 
+                         hover:bg-green-500 transition"
             >
               Send Message
             </button>
