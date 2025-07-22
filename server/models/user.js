@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   articlesRead: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "blog", 
+      ref: "Blog", 
     },
   ],
 
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
   userPlants: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Plant.model",
+      ref: "Plant",
     },
   ],
 });
