@@ -4,6 +4,7 @@ import Home from "./Home";
 import PlantSection from "./PlantSection";
 import Feature from "./Feature";
 import Faq from "../Component/Faq";
+import Donts from "./Donts";
 
 const HeroSection = () => {
   // Hook to get the scroll position
@@ -24,6 +25,7 @@ const HeroSection = () => {
     >
       <Home />
       <PlantSection />
+      <Donts />
       <Feature />
       <Faq />
     </motion.div>
