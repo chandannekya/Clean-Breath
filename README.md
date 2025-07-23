@@ -99,7 +99,7 @@
 
    ```bash
 
-   cd backend
+   cd server
 
    ```
 

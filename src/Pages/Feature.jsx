@@ -9,7 +9,7 @@ const Feature = () => {
   return (
     <div className=" ">
       <h1 className="text-center text-5xl poppins-bold text-black/80 m-8">
-        Fetures
+        Features
       </h1>
       <p className=" poppins-regular w-[70%] m-auto mt-6 text-center text-black/50">
         Discover how our platform can transform your living space into a
