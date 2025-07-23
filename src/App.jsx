@@ -20,6 +20,7 @@ import NotFound from "./Pages/NotFound"; // Add a NotFound component
 
 import Feature from "./Pages/Feature";
 import Faq from "./Component/Faq";
+import AirQualityDashboard from "./Pages/AirQualityDashboard";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/plant/:plantName" element={<PlantsPage />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/plants" element={<PlantDel />} />
+          <Route path="/plant" element={<AirQualityDashboard />} />
           {/* <Route path="/" element={<HeroSection />} /> */}
           <Route path="/plant/:plantName/Order" element={<OrderPage />} />
           <Route path="/signup" element={<SignUp />} />
