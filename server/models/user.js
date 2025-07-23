@@ -19,7 +19,18 @@ const userSchema = new mongoose.Schema({
       ref: "Blog",
     },
   ],
-
+  articlesRead: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Article",
+    }
+  ],
+  userPlants: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Plant",
+    }
+  ],
   token: {
     type: String,
   },

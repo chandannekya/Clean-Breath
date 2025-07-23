@@ -84,7 +84,7 @@ exports.signin = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        error: "All fields are required",
+        error: "All f3ields are required",
       });
     }
 
