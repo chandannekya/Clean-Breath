@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
 import { motion } from "framer-motion"; // Import Framer Motion
-import { FaLeaf } from "react-icons/fa";
+import { FaMapMarkerAlt  } from "react-icons/fa";
 
 // Function to determine the air quality category and health impact
 const getAirQualityCategory = (pollutant, level) => {
@@ -131,22 +131,34 @@ const PlantSection = () => {
           </p>
 
           <div className="flex gap-3 w-11/12">
-            <input
+            <div className="flex flex-row ">
+              <input
               type="text"
-              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm"
+              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm w-[90%]"
               placeholder="Enter your location"
               onChange={changeHandler}
               value={city}
             />
+            <div>
+              <motion.button
+              whileHover={{ scale: 1.1 }} // Scale up on hover
+              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm"
+              onClick={() => {
+                getPlantsByLocation();
+              }}
+            >
+              <FaMapMarkerAlt  size={20} className="inline height-4 width-4 m-2" />
+            </motion.button>
+            </div>
+            </div>
             <motion.button
               whileHover={{ scale: 1.1 }} // Scale up on hover
               className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
               onClick={() => {
-                getPlantsByLocation();
                 getPlants();
               }}
             >
-              <FaLeaf size={20} className="inline height-4 width-4 m-2" />
+              Get Plants
             </motion.button>
           </div>
         </motion.div>
