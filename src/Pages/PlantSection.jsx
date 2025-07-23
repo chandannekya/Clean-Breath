@@ -74,7 +74,7 @@ const PlantSection = () => {
 
       const aqi = response.data.current.air_quality["us-epa-index"];
       setAqi(aqi);
-      
+
       setCity(response.data.location.name);
 
       setGases(airQuality);
@@ -141,7 +141,10 @@ const PlantSection = () => {
             <motion.button
               whileHover={{ scale: 1.1 }} // Scale up on hover
               className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
-              onClick={getPlantsByLocation}
+              onClick={() => {
+                getPlantsByLocation();
+                getPlants();
+              }}
             >
               <FaLeaf size={20} className="inline height-4 width-4 m-2" />
             </motion.button>
