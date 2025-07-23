@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
 import { motion } from "framer-motion"; // Import Framer Motion
+import { FaLeaf } from "react-icons/fa";
 
 // Function to determine the air quality category and health impact
 const getAirQualityCategory = (pollutant, level) => {
@@ -73,6 +74,8 @@ const PlantSection = () => {
 
       const aqi = response.data.current.air_quality["us-epa-index"];
       setAqi(aqi);
+      
+      setCity(response.data.location.name);
 
       setGases(airQuality);
     } catch (error) {
@@ -140,14 +143,7 @@ const PlantSection = () => {
               className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
               onClick={getPlantsByLocation}
             >
-              Get Plants by Location
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }} // Scale up on hover
-              className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
-              onClick={getPlants}
-            >
-              Get Your Plants
+              <FaLeaf size={20} className="inline height-4 width-4 m-2" />
             </motion.button>
           </div>
         </motion.div>
