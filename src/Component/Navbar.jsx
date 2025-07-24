@@ -61,27 +61,27 @@ const Navbar = () => {
             className="hidden lg:flex gap-3 items-center"
           >
             <motion.div variants={itemVariants}>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/" activeClassName="active" className="hover:text-green-900">
                 Home
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/plants" activeClassName="active">
+              <NavLink to="/plants" activeClassName="active" className="hover:text-green-900">
                 Plants
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/blogs" activeClassName="active">
+              <NavLink to="/blogs" activeClassName="active" className="hover:text-green-900">
                 Blogs
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/contact" activeClassName="active">
+              <NavLink to="/contact" activeClassName="active" className="hover:text-green-900">
                 Contact Us
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/about" activeClassName="active">
+              <NavLink to="/about" activeClassName="active" className="hover:text-green-900">
                 About
               </NavLink>
             </motion.div>
