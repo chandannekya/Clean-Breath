@@ -109,12 +109,10 @@ const AboutUs = () => {
           </form>
         </div>
       </section>
+      </div>
 
-      {/* Footer */}
-      <footer className="bg-green-700 text-white text-center p-6 mt-10">
-        <p>&copy; 2025 Clean Breath. All rights reserved.</p>
-      </footer>
-    </div>
+      
+    
   );
 };
 
