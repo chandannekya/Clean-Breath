@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
 import { motion } from "framer-motion"; // Import Framer Motion
+import { FaMapMarkerAlt  } from "react-icons/fa";
 
 // Function to determine the air quality category and health impact
 const getAirQualityCategory = (pollutant, level) => {
@@ -21,11 +22,68 @@ const getAirQualityCategory = (pollutant, level) => {
   return { category: "Dangerous", healthImpact: thresholds.healthImpact };
 };
 
+const geoLocation = async () => {
+  return new Promise((resolve, reject) => { 
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const longitude = position.coords.longitude; 
+          const latitude = position.coords.latitude;
+          resolve({ longitude, latitude }); 
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          reject(error);
+        },
+        {
+          enableHighAccuracy: true, 
+          timeout: 10000,          
+          maximumAge: 0          
+        }
+      );
+    } else {
+      const error = new Error("Geolocation is not supported by this browser.");
+      console.error(error.message);
+      reject(error);
+    }
+  });
+};
 const PlantSection = () => {
   const [Loading, setLoading] = useState(false);
   const [city, setCity] = useState("");
   const [gases, setGases] = useState({});
   const [aqi, setAqi] = useState(0);
+
+  
+
+  const getPlantsByLocation = async () => {
+
+    const { longitude, latitude } = await geoLocation();
+    const lat = Math.round(latitude * 100) / 100;
+    const lon = Math.round(longitude * 100) / 100;
+
+    try {
+      setLoading(true);
+      const key = import.meta.env.VITE_API_KEY;
+      const response = await axios.get(
+        `https://api.weatherapi.com/v1/current.json?key=${key}&q=${lat},${lon}&aqi=yes`
+      );
+      const { co, no2, so2, o3, pm2_5, pm10 } =
+        response.data.current.air_quality;
+      const airQuality = { co, no2, so2, o3, pm2_5, pm10 };
+
+      const aqi = response.data.current.air_quality["us-epa-index"];
+      setAqi(aqi);
+
+      setCity(response.data.location.name);
+
+      setGases(airQuality);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getPlants = async () => {
     try {
@@ -73,19 +131,34 @@ const PlantSection = () => {
           </p>
 
           <div className="flex gap-3 w-11/12">
-            <input
+            <div className="flex flex-row ">
+              <input
               type="text"
-              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm"
+              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm w-[90%]"
               placeholder="Enter your location"
               onChange={changeHandler}
               value={city}
             />
+            <div>
+              <motion.button
+              whileHover={{ scale: 1.1 }} // Scale up on hover
+              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm"
+              onClick={() => {
+                getPlantsByLocation();
+              }}
+            >
+              <FaMapMarkerAlt  size={20} className="inline height-4 width-4 m-2" />
+            </motion.button>
+            </div>
+            </div>
             <motion.button
               whileHover={{ scale: 1.1 }} // Scale up on hover
               className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
-              onClick={getPlants}
+              onClick={() => {
+                getPlants();
+              }}
             >
-              Get Your Plants
+              Get Plants
             </motion.button>
           </div>
         </motion.div>
