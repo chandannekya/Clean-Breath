@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../service/oprations/authApi";
 import logo from "../assets/Untitled design (1).png";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 // Animation Variants
 const menuVariants = {
@@ -14,7 +14,7 @@ const menuVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      staggerChildren: 0.2, // Stagger effect
+      staggerChildren: 0.2,
     },
   },
 };
@@ -35,17 +35,34 @@ const Navbar = () => {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
+
+  // Prevent scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+  }, [isMenuOpen]);
+
+  // Active link styling function
+  const getNavLinkClass = ({ isActive }) =>
+    `hover:text-green-900 ${
+      isActive ? "text-green-900 font-semibold underline" : ""
+    }`;
 
   return (
     <div>
-      <nav className="bg-white sticky h-14 rounded-md shadow-lg poppins-regular flex items-center p-4">
+      <nav className="bg-white sticky top-0 z-50 h-14 rounded-md shadow-lg poppins-regular flex items-center p-4">
         <div className="flex justify-between items-center w-full lg:justify-around p-4">
+          {/* Hamburger Toggle */}
           <div className="lg:hidden" onClick={toggleMenu}>
-            <GiHamburgerMenu className="text-3xl cursor-pointer" />
+            {isMenuOpen ? (
+              <span className="text-3xl cursor-pointer">&times;</span>
+            ) : (
+              <GiHamburgerMenu className="text-3xl cursor-pointer" />
+            )}
           </div>
 
+          {/* Logo */}
           <Link to={"/"} className="flex-grow lg:flex-none flex justify-center">
             <div className="flex items-center">
               <h1 className="text-3xl text-green-700/50 font-bold">Clean</h1>
@@ -53,7 +70,7 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Large Screen Nav Links with Staggered Animation */}
+          {/* Large Screen Nav Links */}
           <motion.div
             variants={menuVariants}
             initial="hidden"
@@ -61,33 +78,23 @@ const Navbar = () => {
             className="hidden lg:flex gap-3 items-center"
           >
             <motion.div variants={itemVariants}>
-              <NavLink to="/" activeClassName="active" className="hover:text-green-900">
-                Home
-              </NavLink>
+              <NavLink to="/" className={getNavLinkClass}>Home</NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/plants" activeClassName="active" className="hover:text-green-900">
-                Plants
-              </NavLink>
+              <NavLink to="/plants" className={getNavLinkClass}>Plants</NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/blogs" activeClassName="active" className="hover:text-green-900">
-                Blogs
-              </NavLink>
+              <NavLink to="/blogs" className={getNavLinkClass}>Blogs</NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/contact" activeClassName="active" className="hover:text-green-900">
-                Contact Us
-              </NavLink>
+              <NavLink to="/contact" className={getNavLinkClass}>Contact Us</NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/about" activeClassName="active" className="hover:text-green-900">
-                About
-              </NavLink>
+              <NavLink to="/about" className={getNavLinkClass}>About</NavLink>
             </motion.div>
           </motion.div>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons - Desktop */}
           <div className="hidden lg:flex gap-3">
             {token !== null ? (
               <motion.div>
@@ -95,93 +102,64 @@ const Navbar = () => {
               </motion.div>
             ) : (
               <>
-                <NavLink to="/signup" activeClassName="active">
-                  Sign Up
-                </NavLink>
-                <NavLink to="/signin" activeClassName="active">
-                  Sign In
-                </NavLink>
+                <NavLink to="/signup" className={getNavLinkClass}>Sign Up</NavLink>
+                <NavLink to="/signin" className={getNavLinkClass}>Sign In</NavLink>
               </>
             )}
           </div>
         </div>
 
-        {/* Dropdown Menu for Small Screens with Staggered Animation */}
+        {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
           <motion.div
             variants={menuVariants}
             initial="hidden"
             animate="visible"
-            className="absolute top-16 left-0 w-full bg-white flex flex-col items-center lg:hidden"
+            className="absolute top-16 left-0 w-full bg-white shadow-md rounded-b-md z-50 flex flex-col items-center lg:hidden"
           >
             <motion.div variants={itemVariants}>
-              <NavLink
-                to="/"
-                className="py-2 w-full text-center border-b"
-                onClick={toggleMenu}
-              >
+              <NavLink to="/" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                 Home
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink
-                to="/plants"
-                className="py-2 w-full text-center border-b"
-                onClick={toggleMenu}
-              >
+              <NavLink to="/plants" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                 Plants
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink
-                to="/blogs"
-                className="py-2 w-full text-center border-b"
-                onClick={toggleMenu}
-              >
+              <NavLink to="/blogs" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                 Blogs
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink
-                to="/contact"
-                className="py-2 w-full text-center border-b"
-                onClick={toggleMenu}
-              >
+              <NavLink to="/contact" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                 Contact Us
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink
-                to="/about"
-                className="py-2 w-full text-center border-b"
-                onClick={toggleMenu}
-              >
+              <NavLink to="/about" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                 About
               </NavLink>
             </motion.div>
             {token !== null ? (
               <motion.div variants={itemVariants}>
-                <div className="py-2 w-full text-center" onClick={logouthandel}>
+                <div className="py-2 w-full text-center" onClick={() => {
+                  toggleMenu();
+                  logouthandel();
+                }}>
                   Log Out
                 </div>
               </motion.div>
             ) : (
               <>
                 <motion.div variants={itemVariants}>
-                  <NavLink
-                    to="/signup"
-                    className="py-2 w-full text-center border-b"
-                    onClick={toggleMenu}
-                  >
+                  <NavLink to="/signup" className="py-2 w-full text-center border-b" onClick={toggleMenu}>
                     Sign Up
                   </NavLink>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <NavLink
-                    to="/signin"
-                    className="py-2 w-full text-center"
-                    onClick={toggleMenu}
-                  >
+                  <NavLink to="/signin" className="py-2 w-full text-center" onClick={toggleMenu}>
                     Sign In
                   </NavLink>
                 </motion.div>
