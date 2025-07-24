@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+// Extended user schema with role-based access and location info
+role: {
+  type: String,
+  enum: ['visitor', 'nursery_admin', 'admin'],
+  default: 'visitor'
+},
+
+nurseryName: {
+  type: String
+},
+
+location: {
+  type: String
+},
+
   username: {
     type: String,
     required: true,
