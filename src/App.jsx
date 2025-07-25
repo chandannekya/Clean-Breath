@@ -16,6 +16,7 @@ import DetailedBlog from "./Pages/DetailedBlog";
 import ContactUs from "./Pages/ContactUs";
 import AboutUs from "./Pages/AboutUs";
 import OrderPage from "./Pages/OrderPage";
+import Services from "./pages/Services";
 import NotFound from "./Pages/NotFound"; // Add a NotFound component
 
 import Feature from "./Pages/Feature";
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/signin" element={<Login />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/services" element={<Services />} />
           <Route path="*" element={<NotFound />} /> {/* 404 route */}
         </Routes>
       </main>
