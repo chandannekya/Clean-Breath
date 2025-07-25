@@ -39,7 +39,7 @@ const Home = () => {
           whileTap={{ scale: 0.95 }}
         >
           <Link
-            to="/plant"
+            to="/plants"
             className="w-full h-full bg-transparent border-none cursor-pointer"
           >
             Find Your Plant Now
