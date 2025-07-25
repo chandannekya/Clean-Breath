@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
       ref: "Article",
     }
   ],
+  articlesWritten: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Article",
+    }
+  ],
   userPlants: [
     {
       type: mongoose.Schema.Types.ObjectId,
