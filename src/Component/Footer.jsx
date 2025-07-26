@@ -60,7 +60,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-r from-green-200/30 via-green-100/30 to-green-200/30 text-gray-700 pt-14 pb-8 mt-12">
+    <footer className="bg-gradient-to-r from-green-200/30 via-green-100/30 to-green-200/30 text-gray-700 pt-14 pb-8">
       <div className="max-w-6xl mx-auto px-6">
         {/* Main grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">

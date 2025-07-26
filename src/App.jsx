@@ -29,7 +29,7 @@ const App = () => {
       </header>
 
       {/* Main content area with padding */}
-      <main className="flex-grow pt-16">
+      <main className="flex-grow pt-14">
         <Routes>
           <Route path="/" element={<HeroSection />} />
           <Route path="write-blog" element={<CreateBlog />} />
