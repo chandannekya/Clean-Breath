@@ -43,12 +43,12 @@ const PlantDel = () => {
   ) : (
     <div>
       <div className="flex flex-col justify-around items-center gap-5">
-        <div className="border-2 flex  items-center  p-2 bg-transparent rounded-lg mt-5">
+        <div className="border-2 flex items-center gap-2 p-2 bg-transparent rounded-lg mt-5">
           {gases.map((gas) => (
             <div
               key={gas}
               className={`text-center poppins-regular text-black/80 cursor-pointer ${
-                selectedGas === gas ? "bg-green-300 rounded-md p-2" : ""
+                selectedGas === gas ? "bg-green-300 rounded-md scale-105" : "scale-100"
               }`}
               onClick={() => handleGasSelection(gas)}
             >
