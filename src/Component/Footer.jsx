@@ -1,97 +1,133 @@
-import React from "react";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Leaf,
+  BookOpen,
+  Mail,
+  Smile,
+  Heart,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/lungs-leaf-nature-ecology-logo-free-vector-removebg-preview.png";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa"; // Importing icons
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { name: "Facebook", icon: Facebook },
+    { name: "Twitter", icon: Twitter },
+    { name: "Instagram", icon: Instagram },
+    { name: "LinkedIn", icon: Linkedin },
+  ];
+
+  const footerLinks = [
+    {
+      title: "Quick Links",
+      links: [
+        {
+          name: "Plants",
+          href: "/plants",
+          icon: Leaf,
+          color: "text-green-500",
+        },
+        {
+          name: "Blogs",
+          href: "/blogs",
+          icon: BookOpen,
+          color: "text-yellow-500",
+        },
+      ],
+    },
+    {
+      title: "More",
+      links: [
+        {
+          name: "Contact Us",
+          href: "/contact",
+          icon: Mail,
+          color: "text-blue-500",
+        },
+        {
+          name: "About",
+          href: "/about",
+          icon: Smile,
+          color: "text-pink-500",
+        },
+      ],
+    },
+  ];
+
   return (
-    <footer className="bg-gradient-to-r from-green-400/40 via-green-300/40 to-green-400/40 poppins-regular  text-black/80 py-10 mt-12">
-      <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center px-6">
-        {/* Logo and Brand */}
-        <div className="flex items-center mb-6 lg:mb-0">
-          <img className="h-16 mr-3" src={logo} alt="Clean Breath Logo" />
-          <h1 className="text-3xl font-bold poppins-bold">
-            Clean <br /> Breath
-          </h1>
+    <footer className="bg-gradient-to-r from-green-200/30 via-green-100/30 to-green-200/30 text-gray-700 pt-14 pb-8">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Main grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+          {/* Brand Section */}
+          <div className="lg:col-span-2 flex flex-col">
+            <div className="flex items-center gap-3 mb-3">
+              <img src={logo} alt="Clean Breath Logo" className="w-12 h-12" />
+              <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
+                Clean Breath
+              </h2>
+            </div>
+            <p className="text-sm text-gray-600 max-w-md leading-relaxed">
+              Discover plants that purify your air and create a healthier environment. Search by air quality needs to find the perfect plant that not only enhances your space but also boosts your well-being.
+            </p>
+            <div className="flex space-x-4 mt-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href="#"
+                  className="text-gray-500 hover:text-green-600 transition-colors duration-200"
+                >
+                  <social.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Footer Links Sections */}
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-gray-800 font-semibold mb-4">{section.title}</h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      to={link.href}
+                      className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-all"
+                    >
+                      <link.icon className={`w-4 h-4 ${link.color}`} />
+                      <span>{link.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Navigation Links */}
-        <nav className="mb-6 lg:mb-0">
-          <ul className="flex flex-col lg:flex-row lg:space-x-8 space-y-4 lg:space-y-0 text-lg">
-            <li>
-              <Link
-                to="/"
-                className="hover:text-gray-100 hover:scale-105 transition duration-300"
+        {/* Bottom Section */}
+        <div className="border-t border-gray-200 pt-6 mt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+          <p>© {currentYear} Clean Breath. All rights reserved.</p>
+          <div className="flex items-center gap-1">
+            <span>Made with</span>
+            <Heart className="w-4 h-4 text-red-500" />
+            <span>
+              by{" "}
+              <a
+                href="https://github.com/chandannekya/Clean-Breath"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-600 transition-colors"
               >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="hover:text-gray-100 hover:scale-105 transition duration-300"
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/services"
-                className="hover:text-gray-100 hover:scale-105 transition duration-300"
-              >
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className="hover:text-gray-100 hover:scale-105 transition duration-300"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Social Media Links */}
-        <div className="flex space-x-6">
-          <a
-            href="#"
-            className="hover:text-gray-100 hover:scale-110 transition duration-300"
-          >
-            <FaFacebookF className="w-6 h-6" />
-          </a>
-          <a
-            href="#"
-            className="hover:text-gray-100 hover:scale-110 transition duration-300"
-          >
-            <FaTwitter className="w-6 h-6" />
-          </a>
-          <a
-            href="#"
-            className="hover:text-gray-100 hover:scale-110 transition duration-300"
-          >
-            <FaInstagram className="w-6 h-6" />
-          </a>
-          <a
-            href="#"
-            className="hover:text-gray-100 hover:scale-110 transition duration-300"
-          >
-            <FaLinkedinIn className="w-6 h-6" />
-          </a>
+                Chandan
+              </a>
+            </span>
+          </div>
         </div>
-      </div>
-
-      {/* Bottom Text */}
-      <div className="text-center mt-8">
-        <p className="text-sm">
-          &copy; 2024 Clean Breath. All rights reserved.
-        </p>
       </div>
     </footer>
   );

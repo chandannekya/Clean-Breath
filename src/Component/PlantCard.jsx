@@ -47,7 +47,7 @@ const PlantCard = ({ plantName, plantDetails }) => {
           </div>
           <Link
             to={`/plant/${encodeURIComponent(plantName)}`}
-            className="bg-green-300 rounded-md flex p-2 items-center m-4 text-white/70 hover:scale-105 transition-all duration-300 ease-in-out  poppins-regular"
+            className="bg-green-500 rounded-md flex p-2 items-center m-4 text-white/70 hover:scale-105 transition-all duration-300 ease-in-out  poppins-regular"
           >
             Know More
           </Link>

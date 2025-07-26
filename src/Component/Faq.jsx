@@ -30,52 +30,53 @@ const faq = [
 ];
 
 const Faq = () => {
-  const [visibleIndex, setVisibleIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  // Toggle visibility function
-  const handleToggle = (index) => {
-    setVisibleIndex(visibleIndex === index ? null : index);
+  const toggleQuestion = (index) => {
+    setActiveIndex((prev) => (prev === index ? null : index));
   };
 
   return (
-    <div className="mt-10">
-      <h1 className="text-center m-8 text-4xl poppins-bold text-black/80">
-        {" "}
-        FAQ'S
-      </h1>
+    <section className="py-12 bg-white">
+      <h2 className="text-center text-4xl font-bold text-green-800 mb-10">
+        FAQs
+      </h2>
       <div className="flex flex-col gap-5 items-center">
-        {faq.map((qa, index) => (
-          <div
-            key={index}
-            className="border-2 p-3 w-[60%] rounded-xl border-green-300"
-          >
-            <div>
-              <div className="flex justify-between items-center">
-                <h1 className="text-xl poppins-semibold text-black/80">
-                  {qa.question}
-                </h1>
-                <div
-                  className="text-xl text-green-400 cursor-pointer"
-                  onClick={() => handleToggle(index)}
-                >
-                  {visibleIndex === index ? (
-                    <FaMinusCircle />
-                  ) : (
-                    <FaPlusCircle />
-                  )}
-                </div>
-              </div>
+        {faq.map((item, index) => {
+          const isActive = index === activeIndex;
 
-              {visibleIndex === index && (
-                <p className="poppins-semibold text-black/50 mt-2">
-                  {qa.answer}
+          return (
+            <div
+              key={index}
+              className="w-[90%] md:w-[60%] border border-green-300 rounded-xl p-4 bg-green-50 shadow-md transition-all duration-300"
+            >
+              <button
+                className="flex justify-between items-center w-full text-left"
+                onClick={() => toggleQuestion(index)}
+                aria-expanded={isActive}
+              >
+                <span className="text-lg font-medium text-green-800">
+                  {item.question}
+                </span>
+                <span className="text-green-500 text-xl">
+                  {isActive ? <FaMinusCircle /> : <FaPlusCircle />}
+                </span>
+              </button>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  isActive ? "max-h-96 mt-3" : "max-h-0"
+                }`}
+              >
+                <p className="text-gray-700 leading-relaxed">
+                  {item.answer}
                 </p>
-              )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,26 +1,24 @@
-import React from "react";
 import Signupform from "../Component/Auth/Signupform";
 import Loader from "../Component/Loader";
 import { useSelector } from "react-redux";
 
 const SignUp = () => {
-  // Selecting the loading state from the Redux store
   const loading = useSelector((state) => state.auth.loading);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-12">
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-slate-800/10 m-8 lg:max-w-[40%] border-2 border-green-950 rounded-md p-8 text-left">
-          <h1 className="text-black/85 text-3xl poppins-bold">
-            Join Clean Breath: <br /> Plant for a Healthier Tomorrow!
+        <div className="bg-green-50 border border-green-500 rounded-lg shadow-lg w-full max-w-xl p-8">
+          <h1 className="text-3xl font-bold text-green-800 mb-4 leading-tight">
+            Join Clean Breath
+            <br className="hidden sm:block" /> Plant for a Healthier Tomorrow!
           </h1>
-          <p className="poppins-regular text-black/60">
-            Welcome to Clean Breath! We're on a mission to help you improve air
-            quality by planting the right trees and plants. By signing up, you
-            become part of a community dedicated to creating a cleaner,
-            healthier environment for everyone.
+          <p className="text-gray-700 text-sm mb-6 leading-relaxed">
+            Be part of a greener world! Sign up to explore which plants improve
+            air quality and discover how your green choices create a cleaner,
+            healthier environment.
           </p>
           <Signupform />
         </div>
