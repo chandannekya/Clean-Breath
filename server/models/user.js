@@ -53,6 +53,52 @@ location: {
       ref: "Plant",
     },
   ],
+
+
+lastLogin:{
+  type:Date,
+  default:Date.now,
+},
+
+pastPurchase: [{
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+
+  purchaseDate: {
+    type: Date,
+    default: Date.now,
+  },
+
+  quantity: {
+    type: Number,
+    default: 1,
+  },
+
+  price: {
+    type: Number,
+    required: true,
+  },
+
+  recentItemsViewed: [{
+    plantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Plant",
+      required: true,
+    },
+
+    viewedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  }],
+}],
+},
+{
+  timestamps: true
 });
 
-exports.User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+module.exports = User;
