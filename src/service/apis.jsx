@@ -8,7 +8,7 @@ export const authEndpoits = {
 export const BlogEndpoints = {
   GET_BLOGS: `${BASE_URL}/blog/blogs`,
   CREATE_BLOG: `${BASE_URL}/blog/create`,
-  GET_BLOG: `${BASE_URL}/blog/blogdel:id`,
+  GET_BLOG: `${BASE_URL}/blog/blogdel`,
 };
 
 export const OrderEndpoints = {
