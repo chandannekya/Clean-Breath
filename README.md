@@ -164,21 +164,14 @@
 - **Backend**: Ensure the backend server is running and configured to accept API requests.
 
 
-## Contributing
 
 
+## 🤝 Contributing
 
-1. Fork the repository
 
-2. Create a new branch: `git checkout -b feature-branch`
+We welcome all kinds of contributions!  
+Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed guidelines before submitting a pull request."  Fix this part everything 
 
-3. Make your changes
-
-4. Commit your changes: `git commit -am 'Add new feature'`
-
-5. Push to the branch: `git push origin feature-branch`
-
-6. Create a new Pull Request
 
 
 
