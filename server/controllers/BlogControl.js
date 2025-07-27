@@ -1,72 +1,124 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const { User } = require("../models/user");
 const { Blog } = require("../models/blog");
-const mongoose = require("mongoose");
+const cloudinary = require("../utilities/cloudinary");
+
 exports.createBlog = async (req, res) => {
   try {
-    const { title, body } = req.body;
+    const { title, description, content } = req.body;
 
-    if (!title || !body) {
-      return res.status(400).json({ error: "All fields are required" });
+    if (!title?.trim()) return res.status(400).json({ error: "Title is required" });
+    if (title.trim().length > 200) return res.status(400).json({ error: "Title too long" });
+
+    if (!description?.trim()) return res.status(400).json({ error: "Description is required" });
+    if (description.trim().length > 500) return res.status(400).json({ error: "Description too long" });
+
+    if (!content?.trim()) return res.status(400).json({ error: "Content is required" });
+    if (content.trim().length > 50000) return res.status(400).json({ error: "Content too long" });
+
+    if (!req.file) return res.status(400).json({ error: "Cover image is required" });
+
+    const coverImg = req.file;
+    const maxFileSize = 5 * 1024 * 1024;
+    if (coverImg.size > maxFileSize) {
+      return res.status(400).json({ error: "Image exceeds 5MB limit" });
     }
 
-    // Check if user is authenticated
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ error: "User not authenticated" });
+    const base64Image = `data:${coverImg.mimetype};base64,${coverImg.buffer.toString("base64")}`;
+
+    let coverImgSrc;
+    try {
+      const uploadRes = await cloudinary.uploader.upload(base64Image, { folder: "blogs" });
+      coverImgSrc = uploadRes.secure_url;
+    } catch (uploadError) {
+      console.error("Cloudinary error:", uploadError);
+      return res.status(500).json({ error: "Image upload failed" });
     }
 
-    // Create the blog
-    const blog = await Blog.create({ title, body, user: req.user.id });
+    const blog = await Blog.create({
+      title: title.trim(),
+      description: description.trim(),
+      content: content.trim(),
+      coverImg: coverImgSrc,
+      author: req.user.id,
+    });
 
-    // Find the user and add the blog to their list
-    await User.findByIdAndUpdate(
-      req.user.id,
-      { $push: { blogs: blog._id } }, // Assuming 'blogs' is an array field
-      { new: true } // Options
-    );
+    try {
+      await User.findByIdAndUpdate(
+        req.user.id,
+        { $push: { blogs: blog._id } },
+        { new: true }
+      );
+    } catch (userUpdateError) {
+      console.error("User blog update failed:", userUpdateError);
+    }
 
-    res.status(201).json({ success: true, blog });
+    res.status(201).json({
+      success: true,
+      message: "Blog created",
+      blog,
+    });
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating the blog" });
+    console.error("Create blog error:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
   }
 };
+
+
 exports.getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find().populate("user");
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    res.status(200).json({ blogs });
+    if (page < 1 || limit < 1 || limit > 50) {
+      return res.status(400).json({ success: false, error: "Invalid pagination params" });
+    }
+
+    const totalBlogs = await Blog.countDocuments();
+    const totalPages = Math.ceil(totalBlogs / limit);
+
+    const blogs = await Blog.find()
+      .populate("author", "username")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select("-content")
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      blogs,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalBlogs,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Fetch blogs error:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
   }
 };
 
 exports.getBlogById = async (req, res) => {
   try {
-    const { id } = req.params; // Extract the ID from the request parameters
+    const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({ message: "ID is required" });
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid blog ID" });
     }
 
-    // Check if the ID is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
-    }
+    const blog = await Blog.findById(id).populate("author", "username");
 
-    const blog = await Blog.findById(id).populate("user");
-
-    if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
-    }
+    if (!blog) return res.status(404).json({ message: "Blog not found" });
 
     res.status(200).json({ message: "Blog fetched", blog });
   } catch (error) {
-    console.error("Error fetching blog:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error while fetching blog" });
+    console.error("Get blog error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
