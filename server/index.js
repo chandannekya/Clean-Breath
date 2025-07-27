@@ -4,9 +4,11 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const database = require("./Connection/dbconnection");
+database();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const userRoutes = require("./routes/UserProfile");
 
 const AuthRoutes = require("./routes/AuthRoutes");
 const BlogRoutes = require("./routes/BlogRoutes");
@@ -27,7 +29,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-database.connect();
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -38,6 +39,7 @@ app.use("/api/blog", BlogRoutes);
 app.use("/api/payment", paymnet);
 app.use("/api/order", OrderRoutes);
 app.use("/api/plants", PlantsRoute);
+app.use('/api/User',userRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
