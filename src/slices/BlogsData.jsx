@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const blogSlice = createSlice({
   name: "blog",
   initialState: {
-    blogs: [],
+    blogs: null, // using null instead of [] -> so we can track if data is fetched from api or not.
     pagination: {},
     loading: false,
   },
