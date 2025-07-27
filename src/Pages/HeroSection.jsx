@@ -20,7 +20,7 @@ const HeroSection = () => {
       style={{
         scale: scale,
       }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 mb-12"
     >
       <Home />
       <PlantSection />

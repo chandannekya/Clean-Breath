@@ -32,8 +32,8 @@ const PlantDel = () => {
     selectedGas === "All"
       ? Object.entries(PlantDis)
       : Object.entries(PlantDis).filter(([key, plantDetails]) =>
-          plantDetails.gases.includes(selectedGas)
-        );
+        plantDetails.gases.includes(selectedGas)
+      );
 
   return loading ? (
     <div className=" h-screen flex justify-center items-center">
@@ -41,32 +41,29 @@ const PlantDel = () => {
       <Loader />
     </div>
   ) : (
-    <div>
-      <div className="flex flex-col justify-around items-center gap-5">
-        <div className="border-2 flex  items-center  p-2 bg-transparent rounded-lg mt-5">
-          {gases.map((gas) => (
-            <div
-              key={gas}
-              className={`text-center poppins-regular text-black/80 cursor-pointer ${
-                selectedGas === gas ? "bg-green-300 rounded-md p-2" : ""
+    <div className="flex flex-col justify-around items-center gap-5 mb-12">
+      <div className="border-2 flex items-center gap-2 p-2 bg-transparent rounded-lg mt-5">
+        {gases.map((gas) => (
+          <div
+            key={gas}
+            className={`text-center poppins-regular text-black/80 cursor-pointer ${selectedGas === gas ? "bg-green-300 rounded-md scale-105" : "scale-100"
               }`}
-              onClick={() => handleGasSelection(gas)}
-            >
-              <h1 className="p-2">{gas}</h1>
-            </div>
-          ))}
-        </div>
+            onClick={() => handleGasSelection(gas)}
+          >
+            <h1 className="p-2">{gas}</h1>
+          </div>
+        ))}
+      </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-          {filteredPlants.map(([key, plantDetails]) => (
-            <div key={plantDetails._id}>
-              <PlantCard
-                plantName={plantDetails.name}
-                plantDetails={plantDetails.scientificName}
-              />
-            </div>
-          ))}
-        </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+        {filteredPlants.map(([key, plantDetails]) => (
+          <div key={plantDetails._id}>
+            <PlantCard
+              plantName={plantDetails.name}
+              plantDetails={plantDetails.scientificName}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
