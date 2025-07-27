@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-// Extended user schema with role-based access and location info
-role: {
-  type: String,
-  enum: ['visitor', 'nursery_admin', 'admin'],
-  default: 'visitor'
-},
+  // Extended user schema with role-based access and location info
+  role: {
+    type: String,
+    enum: ['visitor', 'nursery_admin', 'admin'],
+    default: 'visitor'
+  },
 
-nurseryName: {
-  type: String
-},
+  nurseryName: {
+    type: String
+  },
 
-location: {
-  type: String
-},
+  location: {
+    type: String
+  },
 
   username: {
     type: String,
@@ -28,7 +28,7 @@ location: {
     type: String,
     required: true,
   },
-  blog: [
+  blogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Blog",
@@ -42,7 +42,7 @@ location: {
   articlesRead: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Blog", 
+      ref: "Blog",
     },
   ],
 

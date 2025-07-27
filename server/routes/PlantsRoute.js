@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { getPlants, addPlant, getPlantbyName } = require("../controlers/plants");
+const { getPlants, addPlant, getPlantbyName } = require("../controllers/plants");
 
 const router = express.Router();
 
