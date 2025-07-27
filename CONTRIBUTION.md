@@ -1,7 +1,7 @@
-## 🤝 Contributing
+# 🤝 Contributing to Clean Breath
 
-We welcome all kinds of contributions!  
-Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed guidelines before submitting a pull request.
+Thank you for your interest in contributing to **Clean Breath**!  
+We’re excited to have your support in making this project better — whether it's fixing bugs, adding features, improving documentation, or suggesting enhancements.
 
 ---
 
