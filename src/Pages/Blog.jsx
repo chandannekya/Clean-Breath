@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Blog = () => {
   const dispatch = useDispatch();
-p  const { blogs = null, pagination = {}, loading } = useSelector((state) => state.blog);
+  const { blogs = null, pagination = {}, loading } = useSelector((state) => state.blog);
 
   // Keep current page in Redux state instead of component state
   const currentPage = pagination.currentPage || 1;
