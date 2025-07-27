@@ -4,11 +4,11 @@ const {
   createBlog,
   getAllBlogs,
   getBlogById,
-} = require("../controlers/BlogControl");
+} = require("../controllers/BlogControl");
 
 const router = express.Router();
 
-const { auth } = require("../midelware/auth");
+const { auth } = require("../middleware/auth");
 
 router.post("/create", auth, createBlog);
 
