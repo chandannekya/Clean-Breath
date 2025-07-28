@@ -1,6 +1,6 @@
 import React from "react";
 import { FaLeaf, FaGlobeAmericas, FaSeedling } from "react-icons/fa";
-import { motion } from "framer-motion"; // Import framer-motion
+import { motion } from "framer-motion"; 
 
 const AboutUs = () => {
   return (
