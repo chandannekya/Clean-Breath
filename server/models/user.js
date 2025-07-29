@@ -42,9 +42,10 @@ const userSchema = new mongoose.Schema({
   articlesRead: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Article",  
+      ref: "Article",
     },
   ],
+
   articlesWritten: [
     {
       type: mongoose.Schema.Types.ObjectId,
