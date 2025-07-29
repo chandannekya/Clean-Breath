@@ -13,6 +13,8 @@ const BlogRoutes = require("./routes/BlogRoutes");
 const paymnet = require("./routes/paymnet");
 const OrderRoutes = require("./routes/orederRoutes");
 const PlantsRoute = require("./routes/PlantsRoute");
+const userRoute = require("./routes/userRoutes");
+const articleRoute = require("./routes/articleRoutes");
 app.use(cookieParser());
 
 app.use(
@@ -38,6 +40,8 @@ app.use("/api/blog", BlogRoutes);
 app.use("/api/payment", paymnet);
 app.use("/api/order", OrderRoutes);
 app.use("/api/plants", PlantsRoute);
+app.use('/api/user', userRoute);
+app.use('/api/article', articleRoute);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
