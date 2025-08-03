@@ -12,11 +12,27 @@ export function getAllBlogs() {
     try {
       const response = await apiConnector("GET", GET_BLOGS);
       console.log(response.data);
-      dispatch(setBlogs(response.data.blogs));
-    } catch (error) {
-      console.log(error);
 
-      toast.error("Failed to load blogs");
+      // Check if response contains valid blog data
+      if (response.data && response.data.blogs) {
+        dispatch(setBlogs(response.data.blogs));
+      } else {
+        console.error("Invalid response format:", response.data);
+        dispatch(setBlogs([])); // Set empty array as fallback
+        toast.error("Invalid response from server");
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      dispatch(setBlogs([])); // Set empty array on error
+
+      // Check if it's a network error or server error
+      if (error.response) {
+        toast.error(`Server error: ${error.response.status}`);
+      } else if (error.request) {
+        toast.error("Network error: Cannot connect to server");
+      } else {
+        toast.error("Failed to load blogs");
+      }
     } finally {
       dispatch(setLoading(false));
     }

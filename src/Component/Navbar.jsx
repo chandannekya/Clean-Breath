@@ -61,27 +61,27 @@ const Navbar = () => {
             className="hidden lg:flex gap-3 items-center"
           >
             <motion.div variants={itemVariants}>
-              <NavLink to="/" activeClassName="active" className="hover:text-green-900">
+              <NavLink to="/" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                 Home
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/plants" activeClassName="active" className="hover:text-green-900">
+              <NavLink to="/plants" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                 Plants
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/blogs" activeClassName="active" className="hover:text-green-900">
+              <NavLink to="/blogs" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                 Blogs
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/contact" activeClassName="active" className="hover:text-green-900">
+              <NavLink to="/contact" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                 Contact Us
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/about" activeClassName="active" className="hover:text-green-900">
+              <NavLink to="/about" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                 About
               </NavLink>
             </motion.div>
@@ -95,10 +95,10 @@ const Navbar = () => {
               </motion.div>
             ) : (
               <>
-                <NavLink to="/signup" activeClassName="active">
+                <NavLink to="/signup" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                   Sign Up
                 </NavLink>
-                <NavLink to="/signin" activeClassName="active">
+                <NavLink to="/signin" className={({ isActive }) => isActive ? "text-green-900 font-semibold" : "hover:text-green-900"}>
                   Sign In
                 </NavLink>
               </>

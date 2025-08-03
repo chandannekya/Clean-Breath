@@ -15,9 +15,15 @@ const PlantDel = () => {
   const AllPlants = async () => {
     try {
       const plants = await dispatch(getPlants()); // Await the result of the getPlants call
-      setPlantDis(plants); // Set the plant data to state
+      if (plants && Array.isArray(plants)) {
+        setPlantDis(plants); // Set the plant data to state
+      } else {
+        console.error("Invalid plant data received:", plants);
+        setPlantDis([]); // Set empty array as fallback
+      }
     } catch (error) {
       console.error("Error fetching plant data:", error);
+      setPlantDis([]); // Set empty array on error
     }
   };
   useEffect(() => {
@@ -30,9 +36,9 @@ const PlantDel = () => {
 
   const filteredPlants =
     selectedGas === "All"
-      ? Object.entries(PlantDis)
-      : Object.entries(PlantDis).filter(([key, plantDetails]) =>
-          plantDetails.gases.includes(selectedGas)
+      ? PlantDis
+      : PlantDis.filter((plant) =>
+          plant.gases && plant.gases.includes(selectedGas)
         );
 
   return loading ? (
@@ -58,14 +64,20 @@ const PlantDel = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-          {filteredPlants.map(([key, plantDetails]) => (
-            <div key={plantDetails._id}>
-              <PlantCard
-                plantName={plantDetails.name}
-                plantDetails={plantDetails.scientificName}
-              />
+          {filteredPlants && filteredPlants.length > 0 ? (
+            filteredPlants.map((plant) => (
+              <div key={plant._id}>
+                <PlantCard
+                  plantName={plant.name}
+                  plantDetails={plant.scientificName}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-500">
+              No plants found for the selected gas filter.
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>

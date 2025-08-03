@@ -7,6 +7,14 @@ const crypto = require("crypto");
 
 exports.createPayment = async (req, res) => {
   try {
+    // Check if Razorpay is initialized
+    if (!instance) {
+      return res.status(500).json({
+        success: false,
+        message: "Payment service is not configured. Please contact administrator.",
+      });
+    }
+
     const amount = req.body.amount;
     const options = {
       amount: amount,

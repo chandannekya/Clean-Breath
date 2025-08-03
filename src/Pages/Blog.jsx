@@ -32,7 +32,7 @@ const Blog = () => {
         </Link>
 
         <div className=" w-[80%] mt-4 ">
-          {blogs.length === 0 ? (
+          {!blogs || blogs.length === 0 ? (
             <p className="text-center poppins-bold">No blogs available.</p>
           ) : (
             <div className=" ">

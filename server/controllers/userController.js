@@ -1,9 +1,9 @@
-const User = require("../models/user");
+const { User } = require("../models/user");
 
 exports.getMyProfile = async (req,res) => {
   try {
-    const user = await User.findById(req.user._id)
-    .select('name email articlesRead userPlants')
+    const user = await User.findById(req.user.id)
+    .select('username email articlesRead userPlants')
       .populate('articlesRead', 'title _id')
       .populate('userPlants', 'name image');
 
@@ -17,7 +17,7 @@ exports.getMyProfile = async (req,res) => {
     return res.status(200).json({
       success: true,
       data: {
-        name: user.name,
+        username: user.username,
         email: user.email,
         articlesRead: user.articlesRead,
         userPlants: user.userPlants

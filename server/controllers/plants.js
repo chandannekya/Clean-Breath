@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { Plant } = require("../models/Plant.model");
+const { Plant } = require("../models/Plant");
 
 exports.getPlants = async (req, res) => {
   try {
