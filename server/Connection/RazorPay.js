@@ -1,6 +1,6 @@
 const Razorpay = require("razorpay");
 
-
+// Only initialize Razorpay if keys are provided
 let instance = null;
 
 if (process.env.RazorPay_key_id && process.env.RazorPay_key_secret) {
