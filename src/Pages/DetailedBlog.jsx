@@ -1,59 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getBlog } from "../service/oprations/BlogApi"; // Adjust path as necessary
+import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlog } from "../service/oprations/BlogApi";
 import Loader from "../Component/Loader";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { setBlogdel } from "../slices/BlogsData";
+import moment from "moment";
+
 const DetailedBlog = () => {
   const { id } = useParams();
-
-  const [blog, setblog] = useState({});
-  const loading = useSelector((state) => state.blog.loading);
-  const blogs = useSelector((state) => state.blog.blogs);
-  const blogdel = useSelector((state) => {
-    state.blog.blogdel;
-  });
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.blog.loading);
+
+  const [blog, setBlog] = useState(null);
+
   useEffect(() => {
-    // Implement this function in BlogApi
-
-    const fetchBlog = () => {
-      const foundBlog = blogs.find((blog) => blog._id === id);
-      dispatch(setBlogdel(foundBlog));
-      console.log(blogdel);
-      setblog(foundBlog);
+    const fetchData = async () => {
+      const response = await dispatch(getBlog(id));
+      if (response?.data?.blog) {
+        setBlog(response.data.blog);
+      }
     };
-    fetchBlog();
-  }, [id]);
+    fetchData();
+  }, [dispatch, id]);
 
-  if (loading)
+  if (loading || !blog) {
     return (
-      <div className="flex justify-center items-center">
-        {" "}
+      <div className="flex justify-center items-center h-screen">
         <Loader />
       </div>
     );
-  if (!blog) return <p className="text-center">Blog not found.</p>;
+  }
 
   return (
-    <div>
-      <div className="bg-black/85  text-white flex w-fit p-2 m-6  rounded-full">
-        <Link className=" rounded-full " to="/blogs">
-          <IoMdArrowRoundBack />{" "}
+    <div className="pb-10">
+      {/* Back Button */}
+      <div className="bg-black/85 text-white w-fit p-2 m-6 rounded-full hover:bg-black transition">
+        <Link to="/blogs">
+          <IoMdArrowRoundBack size={24} />
         </Link>
       </div>
-      <div className="m-auto mt-8 w-[80%] ">
-        <h1 className="text-5xl poppins-bold">{blog.title}</h1>
-        <p className="mt-4 text-sm poppins-regular text-gray-500">
-          by {blog.user?.username || "Unknown Author"}
-        </p>
-        <div className=" bg-gray-500/50 my-4 h-[1px]"></div>
+
+      {/* Blog Container */}
+      <div className="m-auto mt-4 w-[90%] max-w-4xl">
+        {/* Title */}
+        <h1 className="text-4xl font-bold poppins-bold">{blog.title}</h1>
+
+        {/* Meta */}
+        <div className="mt-2 text-sm text-gray-600">
+          <span>By <span className="font-medium">{blog.author?.username || "Unknown"}</span></span>
+          <span className="mx-2">•</span>
+          <span>{moment(blog.createdAt).format("MMMM D, YYYY")}</span>
+        </div>
+
+        {/* Cover Image */}
+        <div className="mt-6">
+          <img
+            src={blog.coverImg}
+            alt="Blog Cover"
+            className="w-full h-[300px] object-cover rounded-lg shadow-md"
+          />
+        </div>
+
+        {/* Description */}
+        <p className="mt-6 text-lg text-gray-800 italic">{blog.description}</p>
+
+        {/* Divider */}
+        <hr className="my-6 border-gray-300" />
+
+        {/* Content */}
         <div
-          className="mt-4 poppins-regular"
-          dangerouslySetInnerHTML={{ __html: blog.body }}
+          className="prose prose-lg max-w-none poppins-regular"
+          dangerouslySetInnerHTML={{ __html: blog.content }}
         />
       </div>
     </div>

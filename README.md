@@ -122,9 +122,11 @@
    MONGODB_URI=your_mongodb_connection_string
 
    RAZORPAY_KEY_ID=your_razorpay_key_id
-
    RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-
+   
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
    ```
 
 
@@ -150,6 +152,8 @@
   - `MONGODB_URI` for MongoDB connection
 
   - `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` for Razorpay
+
+  - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` for Cloudinary (used for uploading and managing plant images)
 
   - Any other necessary API keys or configuration values
 
