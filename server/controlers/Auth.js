@@ -1,10 +1,7 @@
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const asyncHandler=require("../utilities/asyncHandler")
-
-const asyncHandler = require("express-async-handler");
-
+const asyncHandler = require("../utilities/asyncHandler");
 exports.sendOTP = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
@@ -120,4 +117,3 @@ exports.signin = asyncHandler(async (req, res) => {
     });
   }
 });
-
