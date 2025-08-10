@@ -67,6 +67,7 @@
 //               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7gU1Q-A0Ds80g38j4C5tmr8OQP7nbblwEXA&s"
 //               alt="Green Plant"
 //               className="w-full rounded-lg shadow-md max-h-[400px] object-cover"
+//               style={{ objectPosition: "center" }} 
 //             />
 //           </motion.div>
 //         </div>
@@ -174,7 +175,7 @@
 //               required
 //               initial={{ opacity: 0 }}
 //               animate={{ opacity: 1 }}
-//               transition={{ duration: 0.8, delay: 4 }}
+//               transition={{ duration: 0.4, delay: 3 }} 
 //             />
 //             <motion.input
 //               type="email"
@@ -183,14 +184,14 @@
 //               required
 //               initial={{ opacity: 0 }}
 //               animate={{ opacity: 1 }}
-//               transition={{ duration: 0.8, delay: 4.5 }}
+//               transition={{ duration: 0.4, delay: 3.5 }} 
 //             />
 //             <motion.button
 //               type="submit"
 //               className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
 //               initial={{ opacity: 0 }}
 //               animate={{ opacity: 1 }}
-//               transition={{ duration: 0.8, delay: 5 }}
+//               transition={{ duration: 0.4, delay: 4 }} 
 //             >
 //               Join Now
 //             </motion.button>
@@ -203,7 +204,6 @@
 
 // export default AboutUs;
 import React from "react";
-import { FaLeaf, FaGlobeAmericas, FaSeedling } from "react-icons/fa";
 import { motion } from "framer-motion"; 
 
 const AboutUs = () => {
@@ -271,7 +271,7 @@ const AboutUs = () => {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7gU1Q-A0Ds80g38j4C5tmr8OQP7nbblwEXA&s"
               alt="Green Plant"
               className="w-full rounded-lg shadow-md max-h-[400px] object-cover"
-              style={{ objectPosition: "center" }} 
+              style={{ objectPosition: "center" }} // Ensures proper positioning
             />
           </motion.div>
         </div>
@@ -379,7 +379,7 @@ const AboutUs = () => {
               required
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 3 }} 
+              transition={{ duration: 0.4, delay: 3 }}  // Speeded up animation
             />
             <motion.input
               type="email"
@@ -388,14 +388,14 @@ const AboutUs = () => {
               required
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 3.5 }} 
+              transition={{ duration: 0.4, delay: 3.5 }}  // Speeded up animation
             />
             <motion.button
               type="submit"
               className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 4 }} 
+              transition={{ duration: 0.4, delay: 4 }}  // Speeded up animation
             >
               Join Now
             </motion.button>
