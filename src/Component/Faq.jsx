@@ -37,8 +37,10 @@ const Faq = () => {
   };
 
   return (
-    <section className="py-12 bg-white">
-      <h2 className="text-center text-4xl font-bold text-green-800 mb-10">
+    // Main section background and transition for dark mode
+    <section className="py-12 bg-white transition-colors duration-300 dark:bg-gray-900">
+      {/* Heading text color for dark mode */}
+      <h2 className="text-center text-4xl font-bold text-green-800 mb-10 dark:text-green-400">
         FAQs
       </h2>
       <div className="flex flex-col gap-5 items-center">
@@ -48,17 +50,20 @@ const Faq = () => {
           return (
             <div
               key={index}
-              className="w-[90%] md:w-[60%] border border-green-300 rounded-xl p-4 bg-green-50 shadow-md transition-all duration-300"
+              // Card background, border, and shadow for dark mode
+              className="w-[90%] md:w-[60%] border border-green-300 rounded-xl p-4 bg-green-50 shadow-md transition-all duration-300 dark:bg-gray-800 dark:border-green-700 dark:shadow-lg"
             >
               <button
                 className="flex justify-between items-center w-full text-left"
                 onClick={() => toggleQuestion(index)}
                 aria-expanded={isActive}
               >
-                <span className="text-lg font-medium text-green-800">
+                {/* Question text color for dark mode */}
+                <span className="text-lg font-medium text-green-800 dark:text-green-400">
                   {item.question}
                 </span>
-                <span className="text-green-500 text-xl">
+                {/* Icon color for dark mode */}
+                <span className="text-green-500 text-xl dark:text-green-400">
                   {isActive ? <FaMinusCircle /> : <FaPlusCircle />}
                 </span>
               </button>
@@ -68,7 +73,8 @@ const Faq = () => {
                   isActive ? "max-h-96 mt-3" : "max-h-0"
                 }`}
               >
-                <p className="text-gray-700 leading-relaxed">
+                {/* Answer text color for dark mode */}
+                <p className="text-gray-700 leading-relaxed dark:text-gray-300">
                   {item.answer}
                 </p>
               </div>

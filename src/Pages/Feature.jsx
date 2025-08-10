@@ -38,11 +38,14 @@ const Feature = () => {
   ];
 
   return (
-    <div className=" ">
-      <h1 className="text-center text-5xl poppins-bold text-black/80 m-8">
+    // Add transition for smooth color changes
+    <div className="transition-colors duration-300">
+      {/* Heading text color for dark mode */}
+      <h1 className="text-center text-5xl poppins-bold text-black/80 m-8 dark:text-gray-200">
         Features
       </h1>
-      <p className=" poppins-regular w-[70%] m-auto mt-6 text-center text-black/50">
+      {/* Paragraph text color for dark mode */}
+      <p className="poppins-regular w-[70%] m-auto mt-6 text-center text-black/50 dark:text-gray-400">
         Discover how our platform can transform your living space into a
         greener, healthier environment. From real-time air quality monitoring to
         insightful plant care tips, each feature is designed to help you make
@@ -52,9 +55,9 @@ const Feature = () => {
         information in the world of plant care.
       </p>
 
-      <div className="  flex flex-col items-center gap-4  m-7 ">
+      <div className="flex flex-col items-center gap-4 m-7">
         {[0, 1].map((rowIndex) => (
-          <div key={rowIndex} className="flex gap-4 lg:flex-row flex-col ">
+          <div key={rowIndex} className="flex gap-4 lg:flex-row flex-col">
             {features.slice(rowIndex * 2, rowIndex * 2 + 2).map((feature, i) => (
               <FeatureCard
                 key={i}
