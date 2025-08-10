@@ -119,7 +119,7 @@
 
    ```plaintext
 
-   MONGODB_URI=your_mongodb_connection_string
+   MONGODBURL=your_mongodb_connection_string
 
    RAZORPAY_KEY_ID=your_razorpay_key_id
    RAZORPAY_KEY_SECRET=your_razorpay_key_secret
