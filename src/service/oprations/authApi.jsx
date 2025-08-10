@@ -27,13 +27,13 @@ export function signUp(username, email, password, navigate) {
         }
       );
 
-      toast.success("Signup Successfully");
+      toast.success("Registration complete! You can now log in.");
 
       navigate("/signin");
     } catch (error) {
       console.log(error);
 
-      toast.error(error.response?.data?.error || "An error occurred");
+      toast.error(error.response?.data?.error || error.response?.data?.message || "Registration failed. Please try again.");
     } finally {
       dispatch(setLoading(false));
     }
@@ -54,11 +54,11 @@ export function signin(email, password, navigate) {
       dispatch(setToken(response.data.token));
       localStorage.setItem("token", response.data.token);
       dispatch(setIslogin(true));
-      toast.success("Logged In");
+      toast.success("Login successful! Welcome🎉");
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "An error occurred");
+      toast.error(error.response?.data?.message || "Login failed. Please check your credentials and try again.");
     } finally {
       dispatch(setLoading(false));
     }
@@ -70,8 +70,8 @@ export function logout() {
     try {
       dispatch(setToken(null));
       dispatch(setIslogin(null));
-      localStorage.getItem("token", "");
-      toast.success("Log Out");
+      localStorage.removeItem("token");
+      toast.success("You've been logged out successfully.");
     } catch (error) {
       console.log(error);
       toast.error("Internal Server Error While Log out");

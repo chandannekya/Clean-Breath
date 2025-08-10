@@ -28,7 +28,7 @@ const Logingform = () => {
       dispatch(signin(email, password, navigate));
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("An error occurred during login");
+      toast.error("Login failed. Please check your credentials and try again.");
     }
   };
 

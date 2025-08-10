@@ -19,7 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.2",
     "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.10",
     "razorpay": "^2.9.4",
     "server": "file:"
   }
