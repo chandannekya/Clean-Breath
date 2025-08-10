@@ -1,10 +1,10 @@
 const express = require("express");
 
-const { createPayment, verifySignature } = require("../controlers/Payment");
+const { createPayment, verifySignature } = require("../controllers/Payment");
 
 const router = express.Router();
 
-const { auth } = require("../midelware/auth");
+const { auth } = require("../middleware/auth");
 
 router.post("/createPayment", auth, createPayment);
 

@@ -1,32 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-// Extract plain text from <p> tags in the HTML body
-const extractParagraphsText = (htmlString) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, "text/html");
-  const paragraphs = Array.from(doc.querySelectorAll("p"));
-  return paragraphs.map((p) => p.textContent).join("\n");
-};
-
-const BlogCard = ({ id, heading, body, author }) => {
-  const paragraphText = extractParagraphsText(body);
+const BlogCard = ({ id, title, description, author, createdAt, coverImg }) => {
+  const formattedDate = new Date(createdAt).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
   return (
-    <div className="border border-green-950 m-4 rounded-md p-3 poppins-regular shadow-sm hover:shadow-md transition-shadow">
-      <Link to={`/blogs/${id}`}>
-        <h1 className="text-lg font-semibold mb-2">{heading}</h1>
-        <div className="text-sm whitespace-pre-line text-gray-800">
-          {paragraphText.length > 100
-            ? paragraphText.slice(0, 100) + "..."
-            : paragraphText}
+    <Link
+      to={`/blogs/${id}`}
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+    >
+      <img
+        src={coverImg}
+        alt="Blog Cover"
+        className="w-full h-48 object-cover"
+      />
+
+      <div className="p-4 flex flex-col justify-between h-[230px]">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 line-clamp-2">{title}</h2>
+          <p className="text-sm text-gray-600 mt-2 line-clamp-3">{description}</p>
         </div>
-        <footer className="text-sm text-gray-500 mt-2">
-          <span>by </span>
-          <span className="font-medium">{author}</span>
-        </footer>
-      </Link>
-    </div>
+        <div className="mt-4 flex justify-between text-xs text-gray-500">
+          <span>by <span className="font-medium">{author?.username || "Unknown"}</span></span>
+          <span>{formattedDate}</span>
+        </div>
+      </div>
+    </Link>
   );
 };
 

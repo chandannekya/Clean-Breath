@@ -4,11 +4,11 @@ const {
   createOrder,
   getAllOrders,
   cancelOrder,
-} = require("../controlers/Order");
+} = require("../controllers/Order");
 
 const router = express.Router();
 
-const { auth } = require("../midelware/auth");
+const { auth } = require("../middleware/auth");
 
 router.post("/createOrder", auth, createOrder);
 router.get("/getAllOrders", getAllOrders);
