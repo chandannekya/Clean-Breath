@@ -1,8 +1,8 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const express = require("express");
 const database = require("./Connection/dbconnection");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -26,7 +26,6 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 database.connect();
 
 app.get("/", (req, res) => {
