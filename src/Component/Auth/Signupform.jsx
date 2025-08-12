@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { signUp } from "../../service/oprations/authApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { EyeIcon,EyeOffIcon } from "lucide-react";
 
 const Signupform = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Signupform = () => {
     username: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -67,15 +69,24 @@ const Signupform = () => {
         <label className="block text-sm font-medium text-green-800 mb-1">
           Password
         </label>
+        <div className="relative">
         <input
           className="w-full rounded-md p-2 bg-white border border-green-300 input-shadow focus:outline-none focus:ring-2 focus:ring-green-400"
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="••••••••"
           value={formData.password}
           onChange={handleChange}
         />
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-green-600 hover:text-green-800"
+          >
+            {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+          </span>
+        </div>
       </div>
+       
 
       <button
         type="submit"
