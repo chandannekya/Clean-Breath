@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Plantimg from "../assets/plant-white_1308-41021-removebg-preview.png";
 
 const Home = () => {
   return (
@@ -58,12 +59,8 @@ const Home = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-sm:w-40 pt-5 mt-5 m-auto">
-          <img
-            src="https://img.freepik.com/free-vector/plant-white_1308-41021.jpg?w=740&t=st=1722587912~exp=1722588512~hmac=82f333fd6be41f3dbef8a5c8e51d465f182a81395f5c460bbb3816a5d6f75333"
-            alt="Plants"
-            className="rounded-md"
-          />
+        <div className="max-sm:w-40 pt-5 mt-5 m-auto hidden lg:block">
+          <img src={Plantimg} alt="Plants" className="rounded-md" />
         </div>
       </motion.div>
     </div>
