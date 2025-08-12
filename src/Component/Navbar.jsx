@@ -95,10 +95,10 @@ const Navbar = () => {
               </motion.div>
             ) : (
               <>
-                <NavLink to="/signup" activeClassName="active">
+                <NavLink to="/signup" activeClassName="active"  className="hover:text-green-900">
                   Sign Up
                 </NavLink>
-                <NavLink to="/signin" activeClassName="active">
+                <NavLink to="/signin" activeClassName="active"  className="hover:text-green-900">
                   Sign In
                 </NavLink>
               </>
