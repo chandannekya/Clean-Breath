@@ -14,8 +14,8 @@ const PlantDel = () => {
   const loading = useSelector((state) => state.auth.loading);
   const AllPlants = async () => {
     try {
-      const plants = await dispatch(getPlants()); // Await the result of the getPlants call
-      setPlantDis(plants); // Set the plant data to state
+      const plants = await dispatch(getPlants());
+      setPlantDis(plants);
     } catch (error) {
       console.error("Error fetching plant data:", error);
     }
@@ -32,22 +32,26 @@ const PlantDel = () => {
     selectedGas === "All"
       ? Object.entries(PlantDis)
       : Object.entries(PlantDis).filter(([key, plantDetails]) =>
-        plantDetails.gases.includes(selectedGas)
-      );
+          plantDetails.gases.includes(selectedGas)
+        );
 
   return loading ? (
-    <div className=" h-screen flex justify-center items-center">
-      {" "}
+    // Loader container background for dark mode
+    <div className="h-screen flex justify-center items-center transition-colors duration-300 dark:bg-gray-900">
       <Loader />
     </div>
   ) : (
-    <div className="flex flex-col justify-around items-center gap-5 mb-12">
-      <div className="border-2 flex items-center gap-2 p-2 bg-transparent rounded-lg mt-5">
+    <div className="flex flex-col justify-around items-center gap-5 mb-12 transition-colors duration-300">
+      {/* Filter buttons border and text for dark mode */}
+      <div className="border-2 flex items-center gap-2 p-2 bg-transparent rounded-lg mt-5 dark:border-gray-700">
         {gases.map((gas) => (
           <div
             key={gas}
-            className={`text-center poppins-regular text-black/80 cursor-pointer ${selectedGas === gas ? "bg-green-300 rounded-md scale-105" : "scale-100"
-              }`}
+            className={`text-center poppins-regular cursor-pointer dark:text-gray-200 ${
+              selectedGas === gas
+                ? "bg-green-300 rounded-md scale-105 dark:bg-green-700"
+                : "scale-100"
+            }`}
             onClick={() => handleGasSelection(gas)}
           >
             <h1 className="p-2">{gas}</h1>

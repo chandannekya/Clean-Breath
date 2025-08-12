@@ -7,7 +7,7 @@ import aqiThresholds from "../AqiTreshhold";
 import { Link } from "react-router-dom";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 // Function to determine the air quality category and health impact
 const getAirQualityCategory = (pollutant, level) => {
@@ -55,18 +55,21 @@ const PlantSection = () => {
   };
 
   return (
-    <div className="flex flex-col bg-opacity-40 max-h-full p-8 justify-center">
+    // Main container now has smooth transitions
+    <div className="flex flex-col max-h-full p-8 justify-center transition-colors duration-300">
       <div className="flex lg:flex-row flex-col-reverse items-center justify-around">
         <motion.div
           className="lg:w-2/4 mt-8 gap-4 flex flex-col p-4"
-          initial={{ opacity: 0, x: -50 }} // Animation start state
-          animate={{ opacity: 1, x: 0 }} // Animation end state
-          transition={{ duration: 0.6 }} // Duration of animation
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <h1 className="text-6xl text-black/80 font-bold poppins-bold">
+          {/* Heading text color for dark mode */}
+          <h1 className="text-6xl text-black/80 font-bold poppins-bold dark:text-gray-100">
             Find Your Green <br /> Guardian!
           </h1>
-          <p className="text-md text-green-800 poppins-regular w-3/4">
+          {/* Paragraph text color for dark mode */}
+          <p className="text-md text-green-800 poppins-regular w-3/4 dark:text-green-400">
             Discover plants that purify your air and create a healthier
             environment. Search by air quality needs to find the perfect plant
             that not only enhances your space but also boosts your well-being.
@@ -75,14 +78,16 @@ const PlantSection = () => {
           <div className="flex gap-3 w-11/12">
             <input
               type="text"
-              className="bg-slate-500 p-2 poppins-regular placeholder:text-green-900/40 w-full bg-opacity-20 input-shadow focus:outline-green-800 focus:outline focus:outline-2 rounded-sm"
+              // Input field styling for dark mode
+              className="p-2 poppins-regular placeholder:text-green-900/40 w-full input-shadow rounded-sm focus:outline-green-800 focus:outline focus:outline-2 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="Enter your location"
               onChange={changeHandler}
               value={city}
             />
             <motion.button
-              whileHover={{ scale: 1.1 }} // Scale up on hover
-              className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter"
+              whileHover={{ scale: 1.1 }}
+              // Button styling for dark mode
+              className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter dark:bg-green-700 dark:hover:bg-green-600"
               onClick={getPlants}
             >
               Get Your Plants
@@ -105,7 +110,10 @@ const PlantSection = () => {
         </motion.div>
       </div>
       {Loading ? (
-        <Loader />
+        // Loader container background for dark mode
+        <div className="h-screen flex justify-center items-center dark:bg-gray-900">
+          <Loader />
+        </div>
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -114,21 +122,22 @@ const PlantSection = () => {
         >
           {aqi === 0 ? null : (
             <motion.div
-              className="flex flex-col items-center text-center justify-center"
+              className="flex flex-col items-center text-center justify-center dark:text-gray-200"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
             >
+              {/* AQI text and subheadings for dark mode */}
               <h1
-                className={`text-3xl poppins-bold  ${aqiThresholds[aqi].warncolor} font-bold font-inter`}
+                className={`text-3xl poppins-bold ${aqiThresholds[aqi].warncolor} font-bold font-inter`}
               >
                 <span>AIR QUALITY:</span> {aqiThresholds[aqi].max}
               </h1>
-              <h2 className="text-xl poppins-semibold max-w-[800px] font-semibold">
-                <span className="uppercase poppins-bold ">Health Impact :</span>{" "}
+              <h2 className="text-xl poppins-semibold max-w-[800px] font-semibold dark:text-gray-200">
+                <span className="uppercase poppins-bold">Health Impact :</span>{" "}
                 {aqiThresholds[aqi].healthImpact}
               </h2>
-              <h3 className="text-lg poppins-semibold max-w-[800px] font-semibold">
+              <h3 className="text-lg poppins-semibold max-w-[800px] font-semibold dark:text-gray-200">
                 <span className="uppercase poppins-bold">Advice :</span>{" "}
                 {aqiThresholds[aqi].plantingAdvice}
               </h3>
@@ -144,7 +153,7 @@ const PlantSection = () => {
                 value
               );
 
-              if (category === "Safe") return null; // Skip rendering if the category is "Safe"
+              if (category === "Safe") return null;
 
               const categoryColor =
                 category === "Moderate" ? "text-yellow-600" : "text-red-600";
@@ -157,17 +166,20 @@ const PlantSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-4xl mt-5 poppins-bold text-green-950 font-bold font-inter">
+                  <h2 className="text-4xl mt-5 poppins-bold text-green-950 font-bold font-inter dark:text-green-300">
                     Air Quality and Mitigating Trees
                   </h2>
-                  <div className="mt-4 p-4 border-slate-400 hover:scale-105 transition-all ease-in-out duration-150 poppins-regular text-left max-w-[400px] rounded-md shadow bg-transparent border-[1px]">
+                  <div
+                    // Pollutant card styling for dark mode
+                    className="mt-4 p-4 hover:scale-105 transition-all ease-in-out duration-150 poppins-regular text-left max-w-[400px] rounded-md shadow bg-transparent border-[1px] dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
+                  >
                     <h3 className={`text-xl poppins-bold ${categoryColor}`}>
                       {pollutant.pollutant}
                     </h3>
                     <p>Concentration: {value} µg/m³</p>
                     <p>Category: {category}</p>
                     <p>Health Impact: {healthImpact}</p>
-                    <h4 className="text-lg font-semibold text-green-700">
+                    <h4 className="text-lg font-semibold text-green-700 dark:text-green-500">
                       Trees that help reduce {pollutant.pollutant}:
                     </h4>
                     <ul className="flex flex-col pl-5">
@@ -175,7 +187,8 @@ const PlantSection = () => {
                         <Link
                           to={`/plant/${encodeURIComponent(tree)}`}
                           key={index}
-                          className="mt-3 bg-opacity-20 bg-transparent border-green-800/20 border-[1.5px] text-center p-2 rounded-md"
+                          // Link styling for dark mode
+                          className="mt-3 text-center p-2 rounded-md transition-colors duration-200 border-[1.5px] border-green-800/20 dark:border-green-600/40 dark:bg-green-900/40 dark:hover:bg-green-800/40"
                         >
                           {tree}
                         </Link>
