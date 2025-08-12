@@ -3,12 +3,13 @@ import { toast } from "react-hot-toast";
 import { signin } from "../../service/oprations/authApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { EyeIcon,EyeOffIcon } from "lucide-react";
 const Logingform = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [showPassword,setShowPassword] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,14 +56,22 @@ const Logingform = () => {
         <label className="block text-sm font-medium text-green-800 mb-1">
           Password
         </label>
+        <div className="relative">
         <input
           className="w-full rounded-md p-2 bg-white border border-green-300 input-shadow focus:outline-none focus:ring-2 focus:ring-green-400"
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="••••••••"
           onChange={handleChange}
           value={formData.password}
         />
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-green-600 hover:text-green-800"
+          >
+            {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+          </span>
+        </div>
       </div>
 
       <button
