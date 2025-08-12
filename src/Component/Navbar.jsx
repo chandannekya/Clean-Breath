@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../service/oprations/authApi";
-import logo from "../assets/Untitled design (1).png";
+import logo from "../assets/Untitled_design__1_-removebg-preview.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion } from "framer-motion";
 import { BsSun, BsMoon } from "react-icons/bs"; // Import sun and moon icons
@@ -52,7 +52,9 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           <Link to={"/"} className="flex-grow lg:flex-none flex justify-center">
             <div className="flex items-center">
               {/* Logo Text: Add dark mode text color */}
-              <h1 className="text-3xl text-green-700/50 font-bold dark:text-green-400">Clean</h1>
+              <h1 className="text-3xl text-green-700/50 font-bold dark:text-green-400">
+                Clean
+              </h1>
               <img className="w-14" src={logo} alt="Logo" />
             </div>
           </Link>
@@ -66,27 +68,47 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           >
             {/* NavLink Styling: Add dark mode hover and text colors */}
             <motion.div variants={itemVariants}>
-              <NavLink to="/" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+              <NavLink
+                to="/"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
                 Home
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/plants" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+              <NavLink
+                to="/plants"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
                 Plants
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/blogs" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+              <NavLink
+                to="/blogs"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
                 Blogs
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/contact" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+              <NavLink
+                to="/contact"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
                 Contact Us
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/about" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+              <NavLink
+                to="/about"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
                 About
               </NavLink>
             </motion.div>
@@ -96,16 +118,27 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           <div className="hidden lg:flex gap-3 items-center">
             {token !== null ? (
               <motion.div>
-                <button onClick={logouthandel} className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+                <button
+                  onClick={logouthandel}
+                  className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+                >
                   Log Out
                 </button>
               </motion.div>
             ) : (
               <>
-                <NavLink to="/signup" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+                <NavLink
+                  to="/signup"
+                  activeClassName="active"
+                  className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+                >
                   Sign Up
                 </NavLink>
-                <NavLink to="/signin" activeClassName="active" className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400">
+                <NavLink
+                  to="/signin"
+                  activeClassName="active"
+                  className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+                >
                   Sign In
                 </NavLink>
               </>
@@ -135,45 +168,76 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           >
             {/* Dropdown Links: Add dark mode text and border colors */}
             <motion.div variants={itemVariants}>
-              <NavLink to="/" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+              <NavLink
+                to="/"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
                 Home
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/plants" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+              <NavLink
+                to="/plants"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
                 Plants
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/blogs" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+              <NavLink
+                to="/blogs"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
                 Blogs
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/contact" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+              <NavLink
+                to="/contact"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
                 Contact Us
               </NavLink>
             </motion.div>
             <motion.div variants={itemVariants}>
-              <NavLink to="/about" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+              <NavLink
+                to="/about"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
                 About
               </NavLink>
             </motion.div>
             {token !== null ? (
               <motion.div variants={itemVariants}>
-                <div className="py-2 w-full text-center dark:text-gray-200" onClick={logouthandel}>
+                <div
+                  className="py-2 w-full text-center dark:text-gray-200"
+                  onClick={logouthandel}
+                >
                   Log Out
                 </div>
               </motion.div>
             ) : (
               <>
                 <motion.div variants={itemVariants}>
-                  <NavLink to="/signup" className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200" onClick={toggleMenu}>
+                  <NavLink
+                    to="/signup"
+                    className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                    onClick={toggleMenu}
+                  >
                     Sign Up
                   </NavLink>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <NavLink to="/signin" className="py-2 w-full text-center dark:text-gray-200" onClick={toggleMenu}>
+                  <NavLink
+                    to="/signin"
+                    className="py-2 w-full text-center dark:text-gray-200"
+                    onClick={toggleMenu}
+                  >
                     Sign In
                   </NavLink>
                 </motion.div>
