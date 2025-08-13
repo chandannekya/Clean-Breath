@@ -51,13 +51,7 @@ const Blogform = () => {
     e.preventDefault();
     if (!heading.trim() || !content.trim()) return;
 
-    dispatch(createBlog(heading, description, content, coverImg,setIsCreatingBlog, navigate));
-    // ------------------page is going to redirect so there is no need to clear the form------------------
-    // setHeading("");
-    // setDescription("");
-    // setContent("");
-    // setCoverImg(null);
-    // setPreview(null);
+    dispatch(createBlog(heading, description, content, coverImg, setIsCreatingBlog, navigate));
   };
 
   const onClear = () => {
@@ -69,12 +63,13 @@ const Blogform = () => {
   };
 
   return (
-    <div className="m-4 mx-auto max-w-4xl px-4 md:px-8">
+    // Main container with dark mode background and text
+    <div className="m-4 mx-auto max-w-4xl px-4 md:px-8 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
       <form className="flex flex-col gap-6 poppins-regular" onSubmit={onSubmit}>
 
         {/* Cover Image Upload */}
-        <div className="relative w-full overflow-hidden rounded-2xl border-2 border-green-700 input-shadow cursor-pointer">
-          <div onClick={triggerFileSelect} className="w-full bg-gray-100 flex items-center justify-center">
+        <div className="relative w-full overflow-hidden rounded-2xl border-2 border-green-700 input-shadow cursor-pointer dark:border-green-800">
+          <div onClick={triggerFileSelect} className="w-full bg-gray-100 flex items-center justify-center dark:bg-gray-800">
             {preview ? (
               <img src={preview} alt="Cover Preview" className="w-full h-92 object-cover" />
             ) : (
@@ -92,7 +87,7 @@ const Blogform = () => {
 
         {/* Title Input */}
         <input
-          className="text-3xl font-semibold text-gray-800 w-full border-b-2 border-green-600 outline-none p-2 placeholder:text-gray-400"
+          className="text-3xl font-semibold text-gray-800 w-full border-b-2 border-green-600 outline-none p-2 placeholder:text-gray-400 dark:bg-gray-900 dark:text-gray-100 dark:border-green-700 dark:placeholder:text-gray-500"
           type="text"
           placeholder="Your blog title here..."
           value={heading}
@@ -101,7 +96,7 @@ const Blogform = () => {
 
         {/* Description Input */}
         <textarea
-          className="w-full h-28 resize-none border-2 border-green-600 rounded-md p-3 text-gray-700 placeholder:text-gray-500 focus:outline-none"
+          className="w-full h-28 resize-none border-2 border-green-600 rounded-md p-3 text-gray-700 placeholder:text-gray-500 focus:outline-none dark:bg-gray-800 dark:text-gray-300 dark:border-green-700 dark:placeholder:text-gray-500"
           placeholder="Short description about the blog..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -109,8 +104,8 @@ const Blogform = () => {
 
         {/* Jodit Editor for Content */}
         <label>
-          <p className="mb-2 text-lg font-medium text-gray-700">Write your story:</p>
-          <div className="border-2 border-green-700 rounded-md input-shadow p-1">
+          <p className="mb-2 text-lg font-medium text-gray-700 dark:text-gray-300">Write your story:</p>
+          <div className="border-2 border-green-700 rounded-md input-shadow p-1 dark:border-green-800">
             <JoditEditor
               ref={editor}
               value={content}
@@ -127,13 +122,13 @@ const Blogform = () => {
           <button
             type="button"
             onClick={onClear}
-            className="bg-red-600 text-white px-5 py-2 rounded-md shadow hover:bg-red-700 transition"
+            className="bg-red-600 text-white px-5 py-2 rounded-md shadow hover:bg-red-700 transition dark:bg-red-700 dark:hover:bg-red-800"
           >
             Clear
           </button>
           <button
             type="submit"
-            className="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 transition"
+            className="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 transition dark:bg-green-700 dark:hover:bg-green-800"
           >
             Publish
           </button>

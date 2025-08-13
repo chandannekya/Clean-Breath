@@ -79,7 +79,7 @@ const OrderPage = () => {
                 orderId,
               })
             );
-            navigate("/plants"); // Navigate to success page after verification
+            navigate("/plants");
           } catch (error) {
             toast.error("An error occurred during payment verification");
             console.error("Verification Error:", error.message || error);
@@ -157,34 +157,39 @@ const OrderPage = () => {
   }, [plantName, dispatch]);
 
   return loading ? (
-    <div className="h-screen flex justify-center items-center">
+    // Loader container background for dark mode
+    <div className="h-screen flex justify-center items-center transition-colors duration-300 dark:bg-gray-900">
       <Loader />
     </div>
   ) : (
-    <div className="flex lg:flex-row flex-col justify-around p-5">
+    // Main container with dark mode text color
+    <div className="flex lg:flex-row flex-col justify-around p-5 transition-colors duration-300 dark:text-gray-200">
       <div>
         <img
           src={photos}
-          className="lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg object-cover h-1/2 shadow-green-100"
+          // Image shadow for dark mode
+          className="lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg object-cover h-1/2 shadow-green-100 dark:shadow-green-900"
           alt="Plant"
         />
-        <h1 className="poppins-bold text-3xl my-3 p-3">{plantName}</h1>
-        <h1 className="poppins-bold my-3 p-3">
+        <h1 className="poppins-bold text-3xl my-3 p-3 dark:text-gray-200">{plantName}</h1>
+        <h1 className="poppins-bold my-3 p-3 dark:text-gray-200">
           Price: &#8377; {Quantity * Plant.price}
         </h1>
       </div>
 
       <div className="poppins-regular lg:w-[40%]">
-        <div className="poppins-bold text-4xl">
+        <div className="poppins-bold text-4xl dark:text-gray-200">
           <h1>Create your Order!</h1>
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* Form labels dark mode */}
           <div className="mb-4">
-            <label className="block text-gray-700">Shipping Address</label>
+            <label className="block text-gray-700 dark:text-gray-400">Shipping Address</label>
+            {/* Form inputs dark mode */}
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="Address"
               name="shippingAddress.address"
               value={shippingAddress.address}
@@ -193,7 +198,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="City"
               name="shippingAddress.city"
               value={shippingAddress.city}
@@ -202,7 +207,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md mt-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="Postal Code"
               name="shippingAddress.postalCode"
               value={shippingAddress.postalCode}
@@ -211,7 +216,7 @@ const OrderPage = () => {
             />
             <input
               type="text"
-              className="w-full p-2 border input-shadow border-gray-300 rounded-md focus:outline-green-800 focus:outline focus:outline-2 mt-2"
+              className="w-full p-2 border input-shadow border-gray-300 rounded-md focus:outline-green-800 focus:outline focus:outline-2 mt-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="Country"
               name="shippingAddress.country"
               value={shippingAddress.country}
@@ -220,10 +225,10 @@ const OrderPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Mobile Number</label>
+            <label className="block text-gray-700 dark:text-gray-400">Mobile Number</label>
             <input
               type="tel"
-              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md"
+              className="w-full p-2 border input-shadow border-gray-300 focus:outline-green-800 focus:outline focus:outline-2 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
               placeholder="Enter mobile number"
               name="mobile"
               value={mobile}
@@ -232,12 +237,13 @@ const OrderPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 poppins-bold">Quantity</label>
+            <label className="block text-gray-700 poppins-bold dark:text-gray-400">Quantity</label>
             <div className="flex items-center">
+              {/* Quantity buttons dark mode */}
               <button
                 type="button"
                 onClick={decreaseQuantity}
-                className="px-4 py-2 border border-green-300 rounded-full"
+                className="px-4 py-2 border border-green-300 rounded-full transition-colors duration-200 dark:border-green-600 dark:text-gray-200"
               >
                 -
               </button>
@@ -245,12 +251,12 @@ const OrderPage = () => {
                 type="text"
                 value={Quantity}
                 readOnly
-                className="w-12 text-center focus:outline-green-800 focus:outline focus:outline-2 mx-2"
+                className="w-12 text-center focus:outline-green-800 focus:outline focus:outline-2 mx-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:outline-green-500"
               />
               <button
                 type="button"
                 onClick={increaseQuantity}
-                className="px-4 py-2 border border-green-300 rounded-full"
+                className="px-4 py-2 border border-green-300 rounded-full transition-colors duration-200 dark:border-green-600 dark:text-gray-200"
               >
                 +
               </button>
@@ -259,7 +265,8 @@ const OrderPage = () => {
           {message && <p className="text-red-500">{message}</p>}
           <button
             type="submit"
-            className="poppins-regular mt-4 w-full bg-green-600 text-white p-3 rounded-md hover:bg-green-700 transition duration-300"
+            // Submit button dark mode
+            className="poppins-regular mt-4 w-full bg-green-600 text-white p-3 rounded-md hover:bg-green-700 transition duration-300 dark:bg-green-700 dark:hover:bg-green-600"
           >
             Place Order
           </button>

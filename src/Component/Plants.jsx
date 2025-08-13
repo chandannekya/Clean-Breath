@@ -29,7 +29,12 @@ const Plants = ({ plantName }) => {
   }, [plantName, dispatch]);
 
   if (!Plant) {
-    return <div>Loading plant data...</div>;
+    return (
+      // Loader text for dark mode
+      <div className="flex justify-center items-center h-screen dark:bg-gray-900 dark:text-gray-300 transition-colors duration-300">
+        Loading plant data...
+      </div>
+    );
   }
 
   const CarePlants = [
@@ -61,22 +66,28 @@ const Plants = ({ plantName }) => {
   ];
 
   return (
-    <div className="flex justify-center p-5">
-      <div className="">
-        <div className="bg-black/85 ml-2 text-white flex w-fit p-2 rounded-full">
+    // Main container with dark mode background and smooth transition
+    <div className="flex justify-center p-5 dark:bg-gray-900 transition-colors duration-300">
+      <div className="w-full max-w-7xl">
+        {/* Back button styling for dark mode */}
+        <div className="bg-black/85 ml-2 text-white flex w-fit p-2 rounded-full dark:bg-gray-700 dark:text-gray-200">
           <Link className="rounded-full" to="/plants">
             <IoMdArrowRoundBack />
           </Link>
         </div>
         <div className="flex justify-between">
           <div className="m-8 lg:mx-8 mx-3 flex flex-col gap-2">
-            <h1 className="text-4xl text-black/80 poppins-bold">{plantName}</h1>
-            <p className="text-lg poppins-medium text-black/50">
+            {/* Plant name heading for dark mode */}
+            <h1 className="text-4xl text-black/80 poppins-bold dark:text-gray-100">
+              {plantName}
+            </h1>
+            {/* Scientific name and other names for dark mode */}
+            <p className="text-lg poppins-medium text-black/50 dark:text-gray-400">
               {Plant.scientificName}
             </p>
-            <p className="poppins-medium text-lg">
+            <p className="poppins-medium text-lg dark:text-gray-200">
               Other Names:
-              <span className="ml-1 text-lg poppins-medium-italic text-black/50">
+              <span className="ml-1 text-lg poppins-medium-italic text-black/50 dark:text-gray-400">
                 {Plant.otherNames?.join(", ")}
               </span>
             </p>
@@ -85,43 +96,52 @@ const Plants = ({ plantName }) => {
         <div className="flex lg:flex-row flex-col gap-5 justify-around">
           <div>
             <img
-              className="lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg shadow-green-100"
+              className="lg:w-[400px] rounded-2xl hover:scale-105 transition duration-300 ease-in-out shadow-lg shadow-green-100 dark:shadow-green-900"
               src={photos}
               alt="Plant"
             />
           </div>
 
           <div className="lg:w-[60%] flex flex-col gap-5">
-            <h2 className="text-3xl text-black/80 poppins-bold">
+            {/* Plant description heading for dark mode */}
+            <h2 className="text-3xl text-black/80 poppins-bold dark:text-gray-100">
               Plant Description
             </h2>
-            <p className="text-[16px] poppins-regular">{Plant.description}</p>
+            {/* Description paragraph for dark mode */}
+            <p className="text-[16px] poppins-regular dark:text-gray-300">
+              {Plant.description}
+            </p>
 
             <div className="m-8">
               <div className="flex gap-4 lg:flex-row flex-col">
+                {/* Sunlight and Difficulty cards for dark mode */}
                 <div className="flex h-[60px] gap-1">
                   <img
-                    className="object-contain w-[60px] border-2 p-2 rounded-2xl"
+                    className="object-contain w-[60px] border-2 p-2 rounded-2xl dark:border-gray-700"
                     src={sunimage}
                     alt="Sunlight"
                   />
                   <div className="flex flex-col justify-between">
-                    <p className="text-black/50 poppins-regular">Sunlight</p>
-                    <p className="text-black poppins-bold">{Plant.sunlight}</p>
+                    <p className="text-black/50 poppins-regular dark:text-gray-400">
+                      Sunlight
+                    </p>
+                    <p className="text-black poppins-bold dark:text-gray-200">
+                      {Plant.sunlight}
+                    </p>
                   </div>
                 </div>
                 <div className="flex h-[60px] gap-1">
                   <div className="flex gap-1">
                     <img
-                      className="object-contain w-[60px] border-2 p-2 rounded-2xl"
+                      className="object-contain w-[60px] border-2 p-2 rounded-2xl dark:border-gray-700"
                       src={difficultyimage}
                       alt="Difficulty"
                     />
                     <div className="flex flex-col justify-between">
-                      <p className="text-black/50 poppins-regular">
+                      <p className="text-black/50 poppins-regular dark:text-gray-400">
                         Difficulty
                       </p>
-                      <p className="text-black poppins-bold">
+                      <p className="text-black poppins-bold dark:text-gray-200">
                         {Plant.difficulty}
                       </p>
                     </div>
@@ -132,12 +152,14 @@ const Plants = ({ plantName }) => {
           </div>
         </div>
         <div className="">
-          <h1 className="text-2xl poppins-bold m-8">
+          {/* Care heading for dark mode */}
+          <h1 className="text-2xl poppins-bold m-8 dark:text-gray-100">
             How to Care for the Plant
           </h1>
 
           <div className="flex lg:flex-row flex-col items-center lg:items-start">
             <div className="lg:w-[60%] w-full">
+              {/* This is a child component that also needs to be updated. */}
               {CarePlants.map((care, index) => (
                 <div key={index}>
                   <CarePlant
@@ -149,10 +171,12 @@ const Plants = ({ plantName }) => {
               ))}
             </div>
             <div className="lg:w-[30%] text-center">
-              <div className="p-2 border-[1px] w-full border-green-400 poppins-bold rounded-md">
+              {/* Price box styling for dark mode */}
+              <div className="p-2 border-[1px] w-full border-green-400 poppins-bold rounded-md dark:border-green-700 dark:text-gray-200">
                 Price : {Plant.price}
               </div>
-              <div className="bg-green-300 rounded-md p-2 m-4 text-white/70 hover:scale-105 transition-all duration-300 ease-in-out poppins-regular">
+              {/* Buy Plant button styling for dark mode */}
+              <div className="bg-green-300 rounded-md p-2 m-4 hover:scale-105 transition-all duration-300 ease-in-out poppins-regular dark:bg-green-700 dark:text-white">
                 <Link
                   to={`/plant/${encodeURIComponent(plantName)}/Order`}
                   className=""
