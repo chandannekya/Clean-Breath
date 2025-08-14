@@ -39,6 +39,21 @@
 
 - **Payment Gateway**: Razorpay
 
+## 🔐 Environment Variables
+
+Before running the backend, you need to configure environment variables.
+
+1. Copy the `.env.example` file in the `backend` directory to a new file named `.env`.
+2. Fill in the variables with your own values.
+
+**Variables:**
+- `PORT` — The port number for the backend server (e.g., 5000)
+- `MONGODB_URI` — Your MongoDB connection string
+- `RAZORPAY_KEY_ID` — Your Razorpay API key ID
+- `RAZORPAY_KEY_SECRET` — Your Razorpay API key secret
+- `CLOUDINARY_CLOUD_NAME` — Your Cloudinary cloud name
+- `CLOUDINARY_API_KEY` — Your Cloudinary API key
+- `CLOUDINARY_API_SECRET` — Your Cloudinary API secret
 
 
 ## Installation
