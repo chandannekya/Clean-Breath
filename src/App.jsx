@@ -18,6 +18,7 @@ import AboutUs from "./Pages/AboutUs";
 import OrderPage from "./Pages/OrderPage";
 import NotFound from "./Pages/NotFound";
 import Feature from "./Pages/Feature";
+import Newsletter from "./Pages/Newsletter";
 import Faq from "./Component/Faq";
 
 const App = () => {
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="/signin" element={<Login />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/newsletter" element={<Newsletter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

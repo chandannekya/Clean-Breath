@@ -112,6 +112,15 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 About
               </NavLink>
             </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to="/newsletter"
+                activeClassName="active"
+                className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
+              >
+                Newsletter
+              </NavLink>
+            </motion.div>
           </motion.div>
 
           {/* Auth Buttons */}
@@ -210,6 +219,15 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 onClick={toggleMenu}
               >
                 About
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to="/newsletter"
+                className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200"
+                onClick={toggleMenu}
+              >
+                Newsletter
               </NavLink>
             </motion.div>
             {token !== null ? (
