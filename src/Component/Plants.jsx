@@ -176,7 +176,7 @@ const Plants = ({ plantName }) => {
                 Price : {Plant.price}
               </div>
               {/* Buy Plant button styling for dark mode */}
-              <div className="bg-green-300 rounded-md p-2 m-4 hover:scale-105 transition-all duration-300 ease-in-out poppins-regular dark:bg-green-700 dark:text-white">
+              <div className="bg-green-300 rounded-md p-2 m-4 hover:scale-105 transition-all  text-white duration-300 ease-in-out poppins-regular dark:bg-green-700 dark:text-white">
                 <Link
                   to={`/plant/${encodeURIComponent(plantName)}/Order`}
                   className=""

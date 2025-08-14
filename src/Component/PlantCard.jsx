@@ -54,7 +54,7 @@ const PlantCard = ({ plantName, plantDetails }) => {
           <Link
             to={`/plant/${encodeURIComponent(plantName)}`}
             // Button styling for dark mode
-            className="bg-green-500 rounded-md flex p-2 items-center m-4 text-white/70 hover:scale-105 transition-all duration-300 ease-in-out poppins-regular dark:bg-green-700 dark:text-white"
+            className="bg-green-500 rounded-md flex p-2 items-center m-4 text-white hover:scale-105 transition-all duration-300 ease-in-out poppins-regular dark:bg-green-700 dark:text-white"
           >
             Know More
           </Link>
