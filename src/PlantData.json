@@ -1,0 +1,66 @@
+{
+  "so2": {
+    "pollutant": "SO2",
+    "trees": [
+      "Indian Coral Tree",
+      "Banyan Tree",
+      "Indian Rosewood ",
+      "Neem Tree",
+      "Peepal Tree"
+    ]
+  },
+  "pm10": {
+    "pollutant": "PM10",
+    "trees": [
+      "Mango Tree",
+      "Indian Gooseberry Tree",
+      "Indian Beech Tree",
+      "Sacred Fig Tree",
+      "Jamun Tree"
+    ]
+  },
+
+  "no2": {
+    "pollutant": "NO2",
+    "trees": [
+      "Indian Beech",
+      "Sacred Fig",
+      "Jamun Tree",
+      "Indian Gooseberry",
+      "Indian Laurel"
+    ]
+  },
+
+  "co": {
+    "pollutant": "CO",
+    "trees": [
+      "Neem Tree",
+      "Banyan Tree",
+      "Ashoka Tree",
+      "Kadamba Tree",
+      "Amaltas Tree"
+    ]
+  },
+
+  "o3": {
+    "pollutant": "O3",
+    "trees": [
+      "Indian Tulip Tree",
+      "Banyan Tree",
+      "Mango Tree",
+      "Amaltas Tree",
+      "Ashoka Tree"
+    ]
+  },
+
+  "pm25": {
+    "pollutant": "PM25",
+    "trees": [
+      "Peepal Tree",
+      "Banyan Tree",
+      "Jamun Tree",
+      "Amla Tree",
+      "Gulmohar Tree"
+    ]
+  }
+}

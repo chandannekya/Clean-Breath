@@ -1,0 +1,148 @@
+const PlantDis = {
+  "Neem Tree": {
+    scientificName: "Azadirachta indica",
+    otherNames: ["Indian Lilac", "Margosa Tree"],
+    description:
+      "The Neem Tree, also known as Indian Lilac, is a fast-growing evergreen with a wide range of medicinal properties. It is native to the Indian subcontinent and has been used in traditional medicine for centuries. Its leaves, bark, and seeds are known for their anti-inflammatory, antifungal, and antibacterial properties. Neem is highly valued for its natural pest control abilities and is often used in organic farming.",
+    watering: "Water regularly, but do not overwater.",
+    sunlight: "Prefers full sunlight.",
+    fertilizer: "Use a balanced fertilizer every 6-8 weeks.",
+    soil: "Thrives in well-drained soil.",
+    temperature: "Grows well in temperatures between 70-100°F.",
+    difficulty: "Easy to grow",
+    image:
+      "https://myplantin.com/_next/image?url=https%3A%2F%2Fstrapi.myplantin.com%2Flarge_main_739e5fb1-8aef-42e8-a9c5-b21e9f1e0629.webp&w=640&q=75",
+    gases: ["co", "no2"],
+  },
+  "Indian Coral Tree": {
+    scientificName: "Erythrina variegata",
+    otherNames: ["Tiger's Claw", "Coral Tree"],
+    description:
+      "The Indian Coral Tree is a striking deciduous tree known for its vibrant coral-red flowers. Native to tropical Asia, it is often used as an ornamental plant due to its unique flower spikes. The tree is hardy and can tolerate a range of soil types. It attracts birds and butterflies, making it a popular choice for gardens and landscaping.",
+    watering: "Water regularly, allowing the soil to dry out between watering.",
+    sunlight: "Needs full sunlight.",
+    fertilizer: "Apply a general-purpose fertilizer once in spring.",
+    soil: "Prefers well-drained, sandy soil.",
+    temperature: "Best suited for temperatures between 60-85°F.",
+    difficulty: "Moderate",
+    image: "https://c1.staticflickr.com/3/2370/2279833269_d30750d3cb_b.jpg",
+    gases: ["so2", "pm10"],
+  },
+  "Banyan Tree": {
+    scientificName: "Ficus benghalensis",
+    otherNames: ["Bargad", "Banyan"],
+    description:
+      "The Banyan Tree is a large, sprawling tree known for its aerial prop roots and extensive canopy. Native to the Indian subcontinent, it is often considered sacred and has significant cultural and ecological importance. It provides dense shade and serves as a habitat for many bird species.",
+    watering: "Water regularly; keep soil consistently moist.",
+    sunlight: "Thrives in full sunlight.",
+    fertilizer:
+      "Fertilize with a balanced fertilizer during the growing season.",
+    soil: "Prefers well-drained, loamy soil.",
+    temperature: "Grows best in temperatures between 60-100°F.",
+    difficulty: "Moderate",
+    image:
+      "https://housing.com/news/wp-content/uploads/2022/11/BANYAN-TREE-FEATURE-compressed.jpg",
+    gases: ["co", "no2", "pm10", "o3"],
+  },
+  "Indian Rosewood": {
+    scientificName: "Dalbergia latifolia",
+    otherNames: ["Rohira", "Shisham"],
+    description:
+      "Indian Rosewood is a tropical hardwood tree known for its high-quality timber, which is used in furniture making and woodworking. Native to the Indian subcontinent, it is valued for its durability and rich, reddish-brown color. It has a dense canopy and is often used in large-scale landscaping.",
+    watering: "Water regularly; ensure soil does not dry out completely.",
+    sunlight: "Requires full sunlight.",
+    fertilizer: "Apply a balanced fertilizer annually.",
+    soil: "Thrives in well-drained, sandy soil.",
+    temperature: "Prefers temperatures between 60-90°F.",
+    difficulty: "Moderate",
+    image:
+      "https://www.quintadosouriques.com/wp-content/uploads/2021/05/dalbergia-sissoo-1540379-1536x1023.jpg",
+    gases: ["co", "so2", "pm2_5"],
+  },
+  "Peepal Tree": {
+    scientificName: "Ficus religiosa",
+    otherNames: ["Sacred Fig", "Pipal"],
+    description:
+      "The Peepal Tree, also known as the Sacred Fig, is considered sacred in many cultures and religions, particularly in India. It is known for its heart-shaped leaves and large size. It is a fast-growing tree that provides ample shade and is often found near temples and sacred places.",
+    watering: "Water regularly; keep soil moist but not waterlogged.",
+    sunlight: "Prefers full sunlight.",
+    fertilizer: "Use a general-purpose fertilizer during the growing season.",
+    soil: "Grows well in well-drained soil.",
+    temperature: "Thrives in temperatures between 60-90°F.",
+    difficulty: "Easy",
+    image: "https://example.com/peepal-tree.jpg",
+    gases: ["co", "no2", "so2"],
+  },
+  "Mango Tree": {
+    scientificName: "Mangifera indica",
+    otherNames: ["Mango"],
+    description:
+      "The Mango Tree is renowned for its delicious fruit and large, evergreen foliage. Native to South Asia, it is widely cultivated in tropical and subtropical regions. The tree produces small, fragrant flowers and large, juicy mangoes that are enjoyed worldwide.",
+    watering: "Water deeply; allow soil to dry between waterings.",
+    sunlight: "Requires full sunlight.",
+    fertilizer: "Use a balanced fertilizer during the growing season.",
+    soil: "Prefers well-drained, sandy soil.",
+    temperature: "Grows best in temperatures between 70-100°F.",
+    difficulty: "Moderate",
+    image: "https://example.com/mango-tree.jpg",
+    gases: ["co", "pm2_5", "o3"],
+  },
+  "Indian Gooseberry Tree": {
+    scientificName: "Phyllanthus emblica",
+    otherNames: ["Amla", "Amla Tree"],
+    description:
+      "The Indian Gooseberry Tree is known for its nutrient-rich fruit, which is used in traditional medicine and culinary applications. Native to India, it has been used for centuries for its health benefits. The tree produces small, greenish-yellow berries that are rich in vitamin C.",
+    watering: "Water regularly, especially during dry periods.",
+    sunlight: "Prefers full sunlight.",
+    fertilizer: "Use a balanced fertilizer annually.",
+    soil: "Thrives in well-drained soil.",
+    temperature: "Best suited for temperatures between 60-85°F.",
+    difficulty: "Easy",
+    image: "https://example.com/indian-gooseberry-tree.jpg",
+    gases: ["no2", "so2"],
+  },
+  "Indian Beech Tree": {
+    scientificName: "Pongamia pinnata",
+    otherNames: ["Karanja", "Pongam Tree"],
+    description:
+      "The Indian Beech Tree is known for its fast growth and nitrogen-fixing abilities. Native to India, it is often used in reforestation and as an ornamental tree. The tree produces attractive white or pink flowers and is valued for its oil-rich seeds.",
+    watering: "Water regularly, allowing the soil to dry between watering.",
+    sunlight: "Requires full sunlight.",
+    fertilizer: "Apply a balanced fertilizer during the growing season.",
+    soil: "Prefers well-drained, sandy soil.",
+    temperature: "Grows best in temperatures between 60-90°F.",
+    difficulty: "Moderate",
+    image: "https://example.com/indian-beech-tree.jpg",
+    gases: ["co", "pm10"],
+  },
+  "Sacred Fig Tree": {
+    scientificName: "Ficus religiosa",
+    otherNames: ["Peepal Tree", "Bodhi Tree"],
+    description:
+      "The Sacred Fig Tree is revered in several religions and cultures, particularly in Buddhism and Hinduism. It is known for its heart-shaped leaves and large size. The tree is often found in sacred sites and is believed to offer spiritual significance.",
+    watering: "Water regularly; keep soil moist.",
+    sunlight: "Prefers full sunlight.",
+    fertilizer: "Use a balanced fertilizer during the growing season.",
+    soil: "Grows well in well-drained soil.",
+    temperature: "Thrives in temperatures between 60-90°F.",
+    difficulty: "Easy",
+    image: "https://example.com/sacred-fig-tree.jpg",
+    gases: ["co", "no2", "so2"],
+  },
+  "Jamun Tree": {
+    scientificName: "Syzygium cumini",
+    otherNames: ["Java Plum", "Black Plum"],
+    description:
+      "The Jamun Tree produces dark purple fruits known for their tangy flavor. Native to the Indian subcontinent, it is widely grown for its fruit and as an ornamental tree. The Jamun Tree has a dense canopy and is valued for its medicinal properties.",
+    watering: "Water deeply; allow soil to dry between waterings.",
+    sunlight: "Requires full sunlight.",
+    fertilizer: "Apply a balanced fertilizer during the growing season.",
+    soil: "Prefers well-drained soil.",
+    temperature: "Grows best in temperatures between 60-90°F.",
+    difficulty: "Moderate",
+    image: "https://example.com/jamun-tree.jpg",
+    gases: ["co", "no2", "pm2_5"],
+  },
+};
+
+export default PlantDis;
