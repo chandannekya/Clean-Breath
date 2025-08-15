@@ -1,5 +1,5 @@
 import { authEndpoits } from "../apis";
-import { setIslogin, setLoading, setToken } from "../../slices/Auth";
+import { setIslogin, setLoading, setToken, setUser } from "../../slices/Auth";
 const { SIGNUP_API, SIGNIN_API } = authEndpoits;
 import { toast } from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
@@ -52,7 +52,9 @@ export function signin(email, password, navigate) {
 
       console.log(response);
       dispatch(setToken(response.data.token));
+      dispatch(setUser(response.data.user));
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       dispatch(setIslogin(true));
       toast.success("Logged In");
       navigate("/");
@@ -69,8 +71,10 @@ export function logout() {
   return async (dispatch) => {
     try {
       dispatch(setToken(null));
-      dispatch(setIslogin(null));
-      localStorage.getItem("token", "");
+      dispatch(setUser(null));
+      dispatch(setIslogin(false));
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       toast.success("Log Out");
     } catch (error) {
       console.log(error);

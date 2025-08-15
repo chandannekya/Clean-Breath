@@ -19,6 +19,7 @@ import OrderPage from "./Pages/OrderPage";
 import NotFound from "./Pages/NotFound";
 import Feature from "./Pages/Feature";
 import Faq from "./Component/Faq";
+import Profile from "./Pages/Profile";
 
 const App = () => {
   // 1. Manage the dark mode state
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="/plant/:plantName/Order" element={<OrderPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="*" element={<NotFound />} />
