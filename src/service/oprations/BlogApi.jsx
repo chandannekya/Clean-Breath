@@ -61,8 +61,11 @@ export function createBlog(title, description, content, coverImg, setIsCreatingB
 export function getBlog(id) {
   return async (dispatch) => {
     dispatch(setLoading(true));
+    const token = localStorage.getItem("token");
+    
     try {
-      const response = await apiConnector("GET", `${GET_BLOG}/${id}`);
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const response = await apiConnector("GET", `${GET_BLOG}/${id}`, null, headers);
       dispatch(setBlogdel(response.data.blog));
       return response;
     } catch (error) {
