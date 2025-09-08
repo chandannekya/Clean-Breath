@@ -9,6 +9,8 @@ export const BlogEndpoints = {
   GET_BLOGS: `${BASE_URL}/blog/blogs`,
   CREATE_BLOG: `${BASE_URL}/blog/create`,
   GET_BLOG: `${BASE_URL}/blog/blogdel`,
+  TOGGLE_LIKE: `${BASE_URL}/blog/:id/like`,
+  GET_LIKES: `${BASE_URL}/blog/:id/likes`,
 };
 
 export const OrderEndpoints = {

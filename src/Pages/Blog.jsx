@@ -84,6 +84,8 @@ const Blog = () => {
                     author={blog.author}
                     createdAt={blog.createdAt}
                     coverImg={blog.coverImg}
+                    likeCount={blog.likeCount || 0}
+                    hasLiked={blog.hasLiked || false}
                   />
                 ))}
               </div>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getBlog } from "../service/oprations/BlogApi";
+import { getBlog, toggleLike, fetchLikes } from "../service/oprations/BlogApi";
 import Loader from "../Component/Loader";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaHeart, FaRegHeart, FaHeartBroken } from "react-icons/fa";
 import moment from "moment";
 
 const DetailedBlog = () => {
@@ -12,16 +13,52 @@ const DetailedBlog = () => {
   const loading = useSelector((state) => state.blog.loading);
 
   const [blog, setBlog] = useState(null);
+  const [isLiking, setIsLiking] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await dispatch(getBlog(id));
       if (response?.data?.blog) {
-        setBlog(response.data.blog);
+        const blogData = response.data.blog;
+        setBlog(blogData);
+        setLikeCount(blogData.likeCount || 0);
+        setHasLiked(blogData.hasLiked || false);
       }
     };
     fetchData();
   }, [dispatch, id]);
+
+  const handleLike = async () => {
+    if (!token) {
+      // Optionally redirect to login or show a login prompt
+      navigate('/login');
+      return;
+    }
+
+    try {
+      setIsLiking(true);
+      const newHasLiked = !hasLiked;
+      const newLikeCount = newHasLiked ? likeCount + 1 : Math.max(0, likeCount - 1);
+      
+      // Optimistic UI update
+      setHasLiked(newHasLiked);
+      setLikeCount(newLikeCount);
+      
+      // Call the API
+      await dispatch(toggleLike(id));
+    } catch (error) {
+      // Revert on error
+      setHasLiked(!hasLiked);
+      setLikeCount(likeCount);
+      console.error("Error toggling like:", error);
+    } finally {
+      setIsLiking(false);
+    }
+  };
 
   if (loading || !blog) {
     return (
@@ -47,10 +84,27 @@ const DetailedBlog = () => {
         <h1 className="text-4xl font-bold poppins-bold dark:text-gray-100">{blog.title}</h1>
 
         {/* Meta */}
-        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-          <span>By <span className="font-medium">{blog.author?.username || "Unknown"}</span></span>
-          <span className="mx-2">•</span>
-          <span>{moment(blog.createdAt).format("MMMM D, YYYY")}</span>
+        <div className="mt-2 flex flex-wrap items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+          <div>
+            <span>By <span className="font-medium">{blog.author?.username || "Unknown"}</span></span>
+            <span className="mx-2">•</span>
+            <span>{moment(blog.createdAt).format("MMMM D, YYYY")}</span>
+          </div>
+          <button 
+            onClick={handleLike}
+            disabled={isLiking}
+            className={`flex items-center mt-2 sm:mt-0 px-3 py-1 rounded-full text-sm ${hasLiked ? 'text-red-500 bg-red-50 dark:bg-red-900/20' : 'text-gray-500 hover:text-red-500 dark:hover:text-red-400'} transition-colors`}
+            aria-label={hasLiked ? 'Unlike this post' : 'Like this post'}
+          >
+            {isLiking ? (
+              <FaHeartBroken className="animate-pulse mr-1" />
+            ) : hasLiked ? (
+              <FaHeart className="mr-1" />
+            ) : (
+              <FaRegHeart className="mr-1" />
+            )}
+            <span className="ml-1">{likeCount} {likeCount === 1 ? 'like' : 'likes'}</span>
+          </button>
         </div>
 
         {/* Cover Image */}
