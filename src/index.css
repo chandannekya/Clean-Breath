@@ -1,6 +1,43 @@
+/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
+
+/* Jodit Editor Dark Mode Styles */
+.dark .jodit-wysiwyg,
+.dark .jodit-wysiwyg * {
+  color: #e5e7eb !important; /* Light gray text in dark mode */
+  background-color: #1f2937 !important; /* Dark background */
+}
+
+.dark .jodit-container:not(.jodit_inline) {
+  border: 1px solid #374151 !important; /* Border color for dark mode */
+}
+
+.dark .jodit-toolbar__box,
+.dark .jodit-toolbar-editor-collection,
+.dark .jodit-toolbar-button {
+  background-color: #1f2937 !important; /* Toolbar background in dark mode */
+  border-color: #374151 !important; /* Toolbar border in dark mode */
+}
+
+.dark .jodit-toolbar-button__button {
+  color: #e5e7eb !important; /* Toolbar button icons in dark mode */
+}
+
+.dark .jodit-toolbar-button:hover:not([disabled]) {
+  background-color: #374151 !important; /* Hover state for toolbar buttons */
+}
+
+.dark .jodit-placeholder {
+  color: #9ca3af !important; /* Placeholder text in dark mode */
+}
+
+/* Ensure the editor content area has proper contrast */
+.dark .jodit-wysiwyg {
+  padding: 1rem;
+}
 
 .homebg {
   background-image: url("./assets/herosection.avif");
