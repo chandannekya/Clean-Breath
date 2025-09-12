@@ -5,12 +5,16 @@ import { BlogEndpoints } from "../apis";
 import { setBlogs, setBlogdel, setBlogPagination } from "../../slices/BlogsData";
 const { GET_BLOGS, CREATE_BLOG, GET_BLOG } = BlogEndpoints;
 
-export function getAllBlogs(page = 1) {
+export function getAllBlogs(page = 1, search = "") {
   return async (dispatch) => {
     dispatch(setLoading(true));
 
     try {
-      const response = await apiConnector("GET", `${GET_BLOGS}?page=${page}`);
+      const queryParams = new URLSearchParams({ page: page.toString() });
+      if (search.trim()) {
+        queryParams.append('q', search.trim());
+      }
+      const response = await apiConnector("GET", `${GET_BLOGS}?${queryParams.toString()}`);
       console.log(response.data);
 
       dispatch(setBlogs(response.data.blogs));
