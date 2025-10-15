@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Home from "./Pages/Home";
 import PlantSection from "./Pages/PlantSection";
 import HeroSection from "./Pages/HeroSection";
@@ -52,15 +53,17 @@ const App = () => {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <header className="fixed top-0 left-0 right-0 z-50">
-        {/* 4. Pass the state and toggle function to the Navbar */}
+        {/* Pass the state and toggle function to the Navbar */}
         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </header>
 
-      {/* 5. Main content area with default dark mode background */}
-      {/* This ensures the background changes even if a specific page doesn't have a background class */}
+      {/* Main content area with default dark mode background */}
       <main className="flex-grow pt-14 bg-white dark:bg-gray-900 transition-colors duration-300">
         <Routes>
-          <Route path="/" element={<HeroSection />} />
+          {/* Redirect root '/' to '/home' */}
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<Home />} />
+
           <Route path="write-blog" element={<CreateBlog />} />
           <Route path="/blogs/:id" element={<DetailedBlog />} />
           <Route path="/plant/:plantName" element={<PlantsPage />} />
@@ -71,11 +74,12 @@ const App = () => {
           <Route path="/signin" element={<Login />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
+
+          {/* Add other routes as needed */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
-      {/* 6. The Footer component no longer needs the prop */}
       <footer className="mt-auto w-full">
         <Footer />
       </footer>
