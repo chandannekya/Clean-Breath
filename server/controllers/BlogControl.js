@@ -71,15 +71,28 @@ exports.getAllBlogs = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
+    const query = req.query.q?.trim();
 
     if (page < 1 || limit < 1 || limit > 50) {
       return res.status(400).json({ success: false, error: "Invalid pagination params" });
     }
 
-    const totalBlogs = await Blog.countDocuments();
+    let filter = {};
+    if (query) {
+      const regex = new RegExp(query, 'i'); // case insensitive
+      filter = {
+        $or: [
+          { title: regex },
+          { description: regex },
+          { 'author.username': regex }
+        ]
+      };
+    }
+
+    const totalBlogs = await Blog.countDocuments(filter);
     const totalPages = Math.ceil(totalBlogs / limit);
 
-    const blogs = await Blog.find()
+    const blogs = await Blog.find(filter)
       .populate("author", "username")
       .sort({ createdAt: -1 })
       .skip(skip)
