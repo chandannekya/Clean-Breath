@@ -1,23 +1,40 @@
 import React, { useState } from "react";
-import axios from "axios";
-import plantData from "../PlantData.json";
-import treeImage from "../assets/treeimage.png";
-import airQualityThresholds from "../ThresholdData";
-import aqiThresholds from "../AqiTreshhold";
-import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Leaf, AlertCircle, CheckCircle2 } from "lucide-react";
 import pimg from "../assets/cactus-pot-isolated_1308-115866-removebg-preview.png";
 import Loader from "../Component/Loader";
-import { motion } from "framer-motion";
 
-// Function to determine the air quality category and health impact
+// Mock data - replace with your actual imports
+const aqiThresholds = {
+  1: { max: "Good", healthImpact: "No impact", plantingAdvice: "Perfect conditions", warncolor: "text-green-600" },
+  2: { max: "Moderate", healthImpact: "Minor respiratory symptoms", plantingAdvice: "Plants can help", warncolor: "text-yellow-600" },
+  3: { max: "Unhealthy for Sensitive Groups", healthImpact: "Increased respiratory symptoms", plantingAdvice: "Recommended", warncolor: "text-orange-600" },
+  4: { max: "Unhealthy", healthImpact: "Respiratory and heart effects", plantingAdvice: "Highly recommended", warncolor: "text-red-600" },
+};
+
+const plantData = {
+  co: { pollutant: "Carbon Monoxide", trees: ["Neem", "Areca Palm", "Golden Pothos"] },
+  no2: { pollutant: "Nitrogen Dioxide", trees: ["Ficus", "Spider Plant", "Bamboo Palm"] },
+  so2: { pollutant: "Sulfur Dioxide", trees: ["Peace Lily", "Snake Plant", "Boston Fern"] },
+  o3: { pollutant: "Ozone", trees: ["Rubber Plant", "Dracaena", "Philodendron"] },
+  pm2_5: { pollutant: "PM2.5", trees: ["Money Plant", "Pothos", "Snake Plant"] },
+  pm10: { pollutant: "PM10", trees: ["English Ivy", "Aloe Vera", "ZZ Plant"] },
+};
+
+const airQualityThresholds = {
+  "Carbon Monoxide": { safe: 1000, moderate: 5000, healthImpact: "Toxic at high levels" },
+  "Nitrogen Dioxide": { safe: 40, moderate: 100, healthImpact: "Respiratory issues" },
+  "Sulfur Dioxide": { safe: 20, moderate: 50, healthImpact: "Breathing problems" },
+  "Ozone": { safe: 60, moderate: 100, healthImpact: "Asthma attacks" },
+  "PM2.5": { safe: 12, moderate: 35, healthImpact: "Cardiovascular effects" },
+  "PM10": { safe: 50, moderate: 150, healthImpact: "Respiratory disease" },
+};
+
 const getAirQualityCategory = (pollutant, level) => {
   const thresholds = airQualityThresholds[pollutant];
   if (!thresholds) return { category: "Unknown", healthImpact: "N/A" };
-
-  if (level < thresholds.safe)
-    return { category: "Safe", healthImpact: thresholds.healthImpact };
-  if (level < thresholds.moderate)
-    return { category: "Moderate", healthImpact: thresholds.healthImpact };
+  if (level < thresholds.safe) return { category: "Safe", healthImpact: thresholds.healthImpact };
+  if (level < thresholds.moderate) return { category: "Moderate", healthImpact: thresholds.healthImpact };
   return { category: "Dangerous", healthImpact: thresholds.healthImpact };
 };
 
@@ -30,22 +47,21 @@ const PlantSection = () => {
   const getPlants = async () => {
     try {
       setLoading(true);
-      const key = import.meta.env.VITE_API_KEY;
-      const response = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=${key}&q=${city}&aqi=yes`
-      );
-      const { co, no2, so2, o3, pm2_5, pm10 } =
-        response.data.current.air_quality;
-      const airQuality = { co, no2, so2, o3, pm2_5, pm10 };
-
-      const aqi = response.data.current.air_quality["us-epa-index"];
-      setAqi(aqi);
-
-      console.log(response.data.current.air_quality);
-      setGases(airQuality);
+      // Mock API call - replace with your actual API
+      setTimeout(() => {
+        setGases({
+          co: 850,
+          no2: 65,
+          so2: 35,
+          o3: 85,
+          pm2_5: 28,
+          pm10: 120,
+        });
+        setAqi(2);
+        setLoading(false);
+      }, 1500);
     } catch (error) {
       console.log(error);
-    } finally {
       setLoading(false);
     }
   };
@@ -54,153 +70,305 @@ const PlantSection = () => {
     setCity(e.target.value);
   };
 
-  return (
-    // Main container now has smooth transitions
-    <div className="flex flex-col max-h-full p-8 justify-center transition-colors duration-300">
-      <div className="flex lg:flex-row flex-col-reverse items-center justify-around">
-        <motion.div
-          className="lg:w-2/4 mt-8 gap-4 flex flex-col p-4"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Heading text color for dark mode */}
-          <h1 className="text-6xl text-black/80 font-bold poppins-bold dark:text-gray-100">
-            Find Your Green <br /> Guardian!
-          </h1>
-          {/* Paragraph text color for dark mode */}
-          <p className="text-md text-green-800 poppins-regular w-3/4 dark:text-green-400">
-            Discover plants that purify your air and create a healthier
-            environment. Search by air quality needs to find the perfect plant
-            that not only enhances your space but also boosts your well-being.
-          </p>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
 
-          <div className="flex gap-3 w-11/12">
-            <input
-              type="text"
-              // Input field styling for dark mode
-              className="p-2 poppins-regular placeholder:text-green-900/40 w-full input-shadow rounded-sm focus:outline-green-800 focus:outline focus:outline-2 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400 dark:focus:outline-green-500"
-              placeholder="Enter your location"
-              onChange={changeHandler}
-              value={city}
-            />
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              // Button styling for dark mode
-              className="bg-green-800 poppins-bold rounded-md p-1 text-xs font-bold transition-all hover:scale-105 duration-200 text-green-200 font-inter dark:bg-green-700 dark:hover:bg-green-600"
-              onClick={getPlants}
-            >
-              Get Your Plants
-            </motion.button>
-          </div>
-        </motion.div>
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  return (
+    <div className="min-h-screen transition-colors duration-500 overflow-hidden bg-white dark:bg-gray-900">
+      {/* Floating Background Elements - Light Mode */}
+      <motion.div
+        className="fixed top-40 left-10 w-80 h-80 rounded-full blur-3xl opacity-10 bg-green-400 dark:opacity-0 pointer-events-none"
+        animate={{
+          y: [0, 40, 0],
+          x: [0, 30, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
+      />
+      <motion.div
+        className="fixed -bottom-40 right-10 w-96 h-96 rounded-full blur-3xl opacity-10 bg-green-300 dark:opacity-0 pointer-events-none"
+        animate={{
+          y: [0, -40, 0],
+          x: [0, -30, 0],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
+      />
+
+      {/* Floating Background Elements - Dark Mode */}
+      <motion.div
+        className="fixed top-40 left-10 w-80 h-80 rounded-full blur-3xl opacity-0 dark:opacity-20 bg-green-500 pointer-events-none"
+        animate={{
+          y: [0, 40, 0],
+          x: [0, 30, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
+      />
+      <motion.div
+        className="fixed -bottom-40 right-10 w-96 h-96 rounded-full blur-3xl opacity-0 dark:opacity-20 bg-green-600 pointer-events-none"
+        animate={{
+          y: [0, -40, 0],
+          x: [0, -30, 0],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 px-6 md:px-12 lg:px-20 py-8 md:py-16">
+        {/* Hero Section */}
         <motion.div
-          className="ml-3 mt-5"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <img
-            style={{
-              filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 5))",
-            }}
-            src={pimg}
-            alt="Tree"
-          />
-        </motion.div>
-      </div>
-      {Loading ? (
-        // Loader container background for dark mode
-        <div className="h-screen flex justify-center items-center dark:bg-gray-900">
-          <Loader />
-        </div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          {aqi === 0 ? null : (
+          {/* Left Content */}
+          <motion.div
+            className="flex flex-col gap-6 md:gap-8"
+            variants={itemVariants}
+          >
+            {/* Heading */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-green-800 dark:text-green-400 tracking-tight leading-tight">
+              Find Your Green <br /> <span className="bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">Guardian!</span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium max-w-2xl">
+              Discover plants that purify your air and create a healthier environment. Search by air quality needs to find the perfect plant that not only enhances your space but also boosts your well-being.
+            </p>
+
+            {/* Search Section */}
             <motion.div
-              className="flex flex-col items-center text-center justify-center dark:text-gray-200"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7 }}
+              className="flex gap-3 w-full max-w-md"
+              variants={itemVariants}
             >
-              {/* AQI text and subheadings for dark mode */}
-              <h1
-                className={`text-3xl poppins-bold ${aqiThresholds[aqi].warncolor} font-bold font-inter`}
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-green-600 dark:text-green-400 pointer-events-none" size={20} />
+                <input
+                  type="text"
+                  className="w-full pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-green-200 dark:border-green-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:border-green-500 dark:focus:border-green-400 transition-colors duration-300 font-medium"
+                  placeholder="Enter your location"
+                  onChange={changeHandler}
+                  value={city}
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-green-700 dark:from-green-500 dark:to-green-600 text-white font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/40 dark:hover:shadow-green-500/50 flex items-center gap-2 whitespace-nowrap"
+                onClick={getPlants}
               >
-                <span>AIR QUALITY:</span> {aqiThresholds[aqi].max}
-              </h1>
-              <h2 className="text-xl poppins-semibold max-w-[800px] font-semibold dark:text-gray-200">
-                <span className="uppercase poppins-bold">Health Impact :</span>{" "}
-                {aqiThresholds[aqi].healthImpact}
-              </h2>
-              <h3 className="text-lg poppins-semibold max-w-[800px] font-semibold dark:text-gray-200">
-                <span className="uppercase poppins-bold">Advice :</span>{" "}
-                {aqiThresholds[aqi].plantingAdvice}
-              </h3>
+                <Leaf size={20} />
+                <span>Get Plants</span>
+              </motion.button>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Content - Image */}
+          <motion.div
+            className="hidden lg:flex justify-center"
+            variants={itemVariants}
+          >
+            <motion.div
+              animate={{
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                repeatType: "mirror",
+              }}
+              className="drop-shadow-2xl"
+            >
+              <img
+                src={pimg}
+                alt="Plant"
+                className="w-full max-w-md"
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Results Section */}
+        <AnimatePresence>
+          {Loading ? (
+            <motion.div
+              className="h-96 flex justify-center items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Loader />
+            </motion.div>
+          ) : aqi === 0 ? null : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-12"
+            >
+              {/* AQI Card */}
+              <motion.div
+                className={`p-8 md:p-12 rounded-3xl backdrop-blur-lg border-2 ${
+                  aqiThresholds[aqi].warncolor === "text-green-600"
+                    ? "bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-600"
+                    : aqiThresholds[aqi].warncolor === "text-yellow-600"
+                    ? "bg-yellow-50 dark:bg-yellow-900/30 border-yellow-300 dark:border-yellow-600"
+                    : aqiThresholds[aqi].warncolor === "text-orange-600"
+                    ? "bg-orange-50 dark:bg-orange-900/30 border-orange-300 dark:border-orange-600"
+                    : "bg-red-50 dark:bg-red-900/30 border-red-300 dark:border-red-600"
+                }`}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase mb-2">Air Quality</p>
+                    <h2 className={`text-4xl md:text-5xl font-black ${aqiThresholds[aqi].warncolor}`}>
+                      {aqiThresholds[aqi].max}
+                    </h2>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase mb-2">Health Impact</p>
+                    <p className="text-lg md:text-xl font-bold text-gray-800 dark:text-gray-200">
+                      {aqiThresholds[aqi].healthImpact}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase mb-2">Advice</p>
+                    <p className="text-lg md:text-xl font-bold text-gray-800 dark:text-gray-200">
+                      {aqiThresholds[aqi].plantingAdvice}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Pollutants Grid */}
+              <motion.div
+                className="space-y-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-4xl md:text-5xl font-black text-green-800 dark:text-green-400 text-center">
+                  Mitigating Plants for Your Area
+                </h2>
+
+                <motion.div
+                  className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                  variants={containerVariants}
+                >
+                  {Object.entries(gases).map(([key, value]) => {
+                    const pollutant = plantData[key];
+                    if (!pollutant) return null;
+
+                    const { category, healthImpact } = getAirQualityCategory(
+                      pollutant.pollutant,
+                      value
+                    );
+
+                    if (category === "Safe") return null;
+
+                    const categoryConfig =
+                      category === "Moderate"
+                        ? { color: "yellow", icon: AlertCircle }
+                        : { color: "red", icon: AlertCircle };
+
+                    return (
+                      <motion.div
+                        key={key}
+                        variants={itemVariants}
+                        whileHover={{ y: -8 }}
+                        className={`p-6 md:p-8 rounded-2xl backdrop-blur-lg border-2 transition-all duration-300 ${
+                          category === "Moderate"
+                            ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-300 dark:border-yellow-600"
+                            : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-600"
+                        }`}
+                      >
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className={`text-2xl font-bold ${
+                            category === "Moderate"
+                              ? "text-yellow-700 dark:text-yellow-400"
+                              : "text-red-700 dark:text-red-400"
+                          }`}>
+                            {pollutant.pollutant}
+                          </h3>
+                          <categoryConfig.icon size={28} className={`${
+                            category === "Moderate"
+                              ? "text-yellow-600 dark:text-yellow-400"
+                              : "text-red-600 dark:text-red-400"
+                          }`} />
+                        </div>
+
+                        {/* Stats */}
+                        <div className="space-y-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                          <p className="text-gray-700 dark:text-gray-300 font-medium">
+                            <span className="font-bold">Level:</span> {value.toFixed(2)} µg/m³
+                          </p>
+                          <p className={`font-bold ${
+                            category === "Moderate"
+                              ? "text-yellow-700 dark:text-yellow-300"
+                              : "text-red-700 dark:text-red-300"
+                          }`}>
+                            {category}
+                          </p>
+                          <p className="text-gray-700 dark:text-gray-300 font-medium">
+                            <span className="font-bold">Impact:</span> {healthImpact}
+                          </p>
+                        </div>
+
+                        {/* Plants List */}
+                        <h4 className="text-lg font-bold text-green-700 dark:text-green-400 mb-4">
+                          Recommended Plants:
+                        </h4>
+                        <div className="space-y-2">
+                          {pollutant.trees.map((tree, index) => (
+                            <motion.div
+                              key={index}
+                              className="p-3 rounded-lg bg-green-50 dark:bg-green-900/30 border-2 border-green-300 dark:border-green-600 text-center font-bold text-green-700 dark:text-green-300 hover:scale-105 transition-transform duration-200 cursor-pointer"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              {tree}
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              </motion.div>
             </motion.div>
           )}
-          <div className="mt-8 flex lg:flex-row flex-col gap-3">
-            {Object.entries(gases).map(([key, value]) => {
-              const pollutant = plantData[key];
-              if (!pollutant) return null;
-
-              const { category, healthImpact } = getAirQualityCategory(
-                pollutant.pollutant,
-                value
-              );
-
-              if (category === "Safe") return null;
-
-              const categoryColor =
-                category === "Moderate" ? "text-yellow-600" : "text-red-600";
-
-              return (
-                <motion.div
-                  key={key}
-                  className="flex flex-col items-center w-11/12"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <h2 className="text-4xl mt-5 poppins-bold text-green-950 font-bold font-inter dark:text-green-300">
-                    Air Quality and Mitigating Trees
-                  </h2>
-                  <div
-                    // Pollutant card styling for dark mode
-                    className="mt-4 p-4 hover:scale-105 transition-all ease-in-out duration-150 poppins-regular text-left max-w-[400px] rounded-md shadow bg-transparent border-[1px] dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
-                  >
-                    <h3 className={`text-xl poppins-bold ${categoryColor}`}>
-                      {pollutant.pollutant}
-                    </h3>
-                    <p>Concentration: {value} µg/m³</p>
-                    <p>Category: {category}</p>
-                    <p>Health Impact: {healthImpact}</p>
-                    <h4 className="text-lg font-semibold text-green-700 dark:text-green-500">
-                      Trees that help reduce {pollutant.pollutant}:
-                    </h4>
-                    <ul className="flex flex-col pl-5">
-                      {pollutant.trees.map((tree, index) => (
-                        <Link
-                          to={`/plant/${encodeURIComponent(tree)}`}
-                          key={index}
-                          // Link styling for dark mode
-                          className="mt-3 text-center p-2 rounded-md transition-colors duration-200 border-[1.5px] border-green-800/20 dark:border-green-600/40 dark:bg-green-900/40 dark:hover:bg-green-800/40"
-                        >
-                          {tree}
-                        </Link>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-      )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
