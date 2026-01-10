@@ -20,9 +20,36 @@ const blogSlice = createSlice({
     setBlogdel: (state, action) => {
       state.blogdel = action.payload;
     },
+    updateBlogLikes: (state, action) => {
+      const { blogId, likeCount, hasLiked } = action.payload;
+      
+      // Update in blogs array
+      if (state.blogs) {
+        state.blogs = state.blogs.map(blog => 
+          blog._id === blogId 
+            ? { ...blog, likeCount, hasLiked } 
+            : blog
+        );
+      }
+      
+      // Update in blogdel (single blog view)
+      if (state.blogdel && state.blogdel._id === blogId) {
+        state.blogdel = { 
+          ...state.blogdel, 
+          likeCount, 
+          hasLiked 
+        };
+      }
+    },
   },
 });
 
-export const { setBlogs, setLoading, setBlogPagination, setBlogdel } = blogSlice.actions;
+export const { 
+  setBlogs, 
+  setLoading, 
+  setBlogPagination, 
+  setBlogdel, 
+  updateBlogLikes 
+} = blogSlice.actions;
 
 export default blogSlice.reducer;

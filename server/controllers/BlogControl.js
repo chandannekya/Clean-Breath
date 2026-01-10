@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { User } = require("../models/user");
 const { Blog } = require("../models/blog");
+const { Like } = require("../models/like");
 const cloudinary = require("../utilities/cloudinary");
 
 exports.createBlog = async (req, res) => {
@@ -106,19 +107,96 @@ exports.getAllBlogs = async (req, res) => {
 
 exports.getBlogById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const blog = await Blog.findById(req.params.id).populate("author", "username");
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
+    }
+    
+    // Get like count and check if current user has liked the blog
+    const likeCount = await Like.countDocuments({ blog: blog._id });
+    let hasLiked = false;
+    
+    if (req.user?.id) {
+      hasLiked = await Like.exists({ user: req.user.id, blog: blog._id });
+    }
+    
+    const blogWithLikes = {
+      ...blog.toObject(),
+      likeCount,
+      hasLiked
+    };
+    
+    res.status(200).json({ success: true, blog: blogWithLikes });
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+};
 
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid blog ID" });
+// Toggle like on a blog post
+exports.toggleLike = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const userId = req.user.id;
+
+    // Check if blog exists
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
     }
 
-    const blog = await Blog.findById(id).populate("author", "username");
+    // Check if user has already liked the post
+    const existingLike = await Like.findOneAndDelete({ user: userId, blog: blogId });
 
-    if (!blog) return res.status(404).json({ message: "Blog not found" });
+    if (existingLike) {
+      // Unlike the post
+      const likeCount = await Like.countDocuments({ blog: blogId });
+      return res.status(200).json({
+        success: true,
+        message: "Blog unliked successfully",
+        likeCount,
+        hasLiked: false
+      });
+    }
 
-    res.status(200).json({ message: "Blog fetched", blog });
+    // Like the post
+    await Like.create({ user: userId, blog: blogId });
+    const likeCount = await Like.countDocuments({ blog: blogId });
+
+    res.status(200).json({
+      success: true,
+      message: "Blog liked successfully",
+      likeCount,
+      hasLiked: true
+    });
   } catch (error) {
-    console.error("Get blog error:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error toggling like:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+};
+
+// Get likes for a blog post
+exports.getLikes = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    
+    // Check if blog exists
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
+    }
+    
+    const likes = await Like.find({ blog: blogId })
+      .populate('user', 'username')
+      .sort({ createdAt: -1 });
+    
+    res.status(200).json({
+      success: true,
+      likes,
+      count: likes.length
+    });
+  } catch (error) {
+    console.error("Error fetching likes:", error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
   }
 };

@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleLike } from "../../service/oprations/BlogApi";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const BlogCard = ({ id, title, description, author, createdAt, coverImg }) => {
+const BlogCard = ({ id, title, description, author, createdAt, coverImg, likeCount: initialLikeCount, hasLiked: initialHasLiked }) => {
+  const dispatch = useDispatch();
+  const [isLiking, setIsLiking] = useState(false);
+  const [likeCount, setLikeCount] = useState(initialLikeCount || 0);
+  const [hasLiked, setHasLiked] = useState(initialHasLiked || false);
+  const { token } = useSelector((state) => state.auth);
+
+  const handleLike = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!token) {
+      // Optionally redirect to login or show a login prompt
+      return;
+    }
+
+    const newHasLiked = !hasLiked; // Moved outside try block to be available in catch
+    
+    try {
+      setIsLiking(true);
+      const newLikeCount = newHasLiked ? likeCount + 1 : Math.max(0, likeCount - 1);
+      
+      // Optimistic UI update
+      setHasLiked(newHasLiked);
+      setLikeCount(newLikeCount);
+      
+      // Call the API
+      await dispatch(toggleLike(id));
+    } catch (error) {
+      // Revert on error
+      setHasLiked(!newHasLiked);
+      setLikeCount(likeCount);
+      console.error("Error toggling like:", error);
+    } finally {
+      setIsLiking(false);
+    }
+  };
   const formattedDate = new Date(createdAt).toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",
@@ -31,13 +70,28 @@ const BlogCard = ({ id, title, description, author, createdAt, coverImg }) => {
             {description}
           </p>
         </div>
-        <div className="mt-4 flex justify-between text-xs text-gray-500 dark:text-gray-500">
-          <span>
-            by{" "}
-            <span className="font-medium dark:text-gray-300">
-              {author?.username || "Unknown"}
+        <div className="mt-4 flex justify-between items-center text-xs text-gray-500 dark:text-gray-500">
+          <div className="flex items-center">
+            <button 
+              onClick={handleLike}
+              disabled={isLiking}
+              className={`flex items-center mr-2 ${hasLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} transition-colors`}
+              aria-label={hasLiked ? 'Unlike this post' : 'Like this post'}
+            >
+              {hasLiked ? (
+                <FaHeart className="mr-1" />
+              ) : (
+                <FaRegHeart className="mr-1" />
+              )}
+              <span className="ml-1">{likeCount}</span>
+            </button>
+            <span>
+              by{" "}
+              <span className="font-medium dark:text-gray-300">
+                {author?.username || "Unknown"}
+              </span>
             </span>
-          </span>
+          </div>
           <span>{formattedDate}</span>
         </div>
       </div>
