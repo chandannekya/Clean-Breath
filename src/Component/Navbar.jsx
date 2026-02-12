@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../service/oprations/authApi";
 import logo from "../assets/Untitled_design__1_-removebg-preview.png";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaUser } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { BsSun, BsMoon } from "react-icons/bs"; // Import sun and moon icons
 
@@ -27,8 +28,9 @@ const itemVariants = {
 
 // Accept darkMode and toggleDarkMode as props
 const Navbar = ({ darkMode, toggleDarkMode }) => {
-  const login = useSelector((state) => state.auth.islogin);
+  const islogin = useSelector((state) => state.auth.islogin);
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -117,7 +119,18 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           {/* Auth Buttons */}
           <div className="hidden lg:flex gap-3 items-center">
             {token !== null ? (
-              <motion.div>
+              <motion.div className="flex items-center gap-3">
+                {/* Profile Icon */}
+                <NavLink
+                  to="/profile"
+                  className="hover:scale-110 transition-transform duration-200"
+                >
+                  <div className="w-8 h-8 bg-green-600 dark:bg-green-500 rounded-full flex items-center justify-center hover:bg-green-700 dark:hover:bg-green-400 transition-colors duration-200">
+                    <FaUser className="text-white text-sm" />
+                  </div>
+                </NavLink>
+                
+                {/* Logout Button */}
                 <button
                   onClick={logouthandel}
                   className="hover:text-green-900 transition-colors duration-200 dark:text-gray-200 dark:hover:text-green-400"
@@ -213,14 +226,29 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               </NavLink>
             </motion.div>
             {token !== null ? (
-              <motion.div variants={itemVariants}>
-                <div
-                  className="py-2 w-full text-center dark:text-gray-200"
-                  onClick={logouthandel}
-                >
-                  Log Out
-                </div>
-              </motion.div>
+              <>
+                <motion.div variants={itemVariants}>
+                  <NavLink
+                    to="/profile"
+                    className="py-2 w-full text-center border-b dark:border-gray-700 dark:text-gray-200 flex items-center justify-center gap-2"
+                    onClick={toggleMenu}
+                  >
+                    <FaUser className="text-green-600 dark:text-green-400" />
+                    Profile
+                  </NavLink>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <div
+                    className="py-2 w-full text-center dark:text-gray-200 cursor-pointer"
+                    onClick={() => {
+                      logouthandel();
+                      toggleMenu();
+                    }}
+                  >
+                    Log Out
+                  </div>
+                </motion.div>
+              </>
             ) : (
               <>
                 <motion.div variants={itemVariants}>

@@ -53,6 +53,8 @@ const userSchema = new mongoose.Schema({
       ref: "Plant",
     },
   ],
+}, {
+  timestamps: true // This adds createdAt and updatedAt fields automatically
 });
 
 exports.User = mongoose.model("User", userSchema);

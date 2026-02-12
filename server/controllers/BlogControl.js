@@ -33,7 +33,9 @@ exports.createBlog = async (req, res) => {
       coverImgSrc = uploadRes.secure_url;
     } catch (uploadError) {
       console.error("Cloudinary error:", uploadError);
-      return res.status(500).json({ error: "Image upload failed" });
+      // Use placeholder image when Cloudinary fails
+      console.log("Using placeholder image for blog cover");
+      coverImgSrc = "https://via.placeholder.com/800x400/4ade80/ffffff?text=Blog+Cover";
     }
 
     const blog = await Blog.create({
@@ -115,6 +117,24 @@ exports.getBlogById = async (req, res) => {
     const blog = await Blog.findById(id).populate("author", "username");
 
     if (!blog) return res.status(404).json({ message: "Blog not found" });
+
+    // Track article reading for authenticated users
+    if (req.user && req.user.id) {
+      try {
+        console.log(`Tracking article read: User ${req.user.id} read blog ${blog._id}`);
+        const updateResult = await User.findByIdAndUpdate(
+          req.user.id,
+          { $addToSet: { articlesRead: blog._id } }, // $addToSet prevents duplicates
+          { new: true }
+        );
+        console.log(`Article tracking successful for user ${req.user.id}`);
+      } catch (trackingError) {
+        console.error("Article tracking error:", trackingError);
+        // Don't fail the request if tracking fails
+      }
+    } else {
+      console.log("No user authentication found, skipping article tracking");
+    }
 
     res.status(200).json({ message: "Blog fetched", blog });
   } catch (error) {
